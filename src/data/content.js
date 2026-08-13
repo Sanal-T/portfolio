@@ -11,6 +11,8 @@ export const profile = {
   // Add a hosted PDF link here once you have one — e.g. a GitHub raw link
   // or a Drive share link with viewer access enabled.
   resumeUrl: "#",
+  available: true,
+  availability: "Open to roles",
 };
 
 export const skillGroups = [
@@ -43,7 +45,7 @@ export const projects = [
       "End-to-end recruitment automation — job processing, applicant tracking, and AI-based candidate evaluation, built as a production-style backend rather than a demo.",
     tags: ["AI Evaluation", "ATS", "Backend", "Automation"],
     href: "https://github.com/Sanal-T/AI-Powered-Recruitment-And-Job-Management-System",
-    featured: true,
+    featured: false,
   },
   {
     name: "Applicant Tracking System",

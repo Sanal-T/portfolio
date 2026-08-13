@@ -4,7 +4,7 @@ import { profile } from "../data/content";
 
 const links = [
   { href: "#work", label: "Work" },
-  { href: "#skills", label: "Skills" },
+  { href: "#stack", label: "Skills" },
   { href: "#experience", label: "Experience" },
   { href: "#contact", label: "Contact" },
 ];
@@ -21,24 +21,24 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 z-50 w-full transition-colors duration-300 ${
-        scrolled ? "bg-ink/85 backdrop-blur-md border-b border-line" : "bg-transparent"
+        scrolled ? "border-b border-line bg-ink/85 backdrop-blur-md" : "bg-transparent"
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <a
-          href="#top"
-          className="font-display text-sm font-semibold tracking-wide text-paper"
-        >
+        <a href="#top" className="font-display text-sm font-semibold tracking-wide text-paper">
           {profile.name.split(" ")[0]}
-          <span className="text-ember">.</span>
+          <span className="text-violet">.</span>
         </a>
 
         <ul className="hidden gap-8 font-mono text-xs uppercase tracking-wider text-muted md:flex">
           {links.map((l) => (
-            <li key={l.href}>
-              <a href={l.href} className="transition-colors hover:text-paper">
+            <li key={l.href} className="flow-link">
+              <a href={l.href} className="flow-label">
                 {l.label}
               </a>
+              <span aria-hidden="true" className="flow-label-clone">
+                {l.label}
+              </span>
             </li>
           ))}
         </ul>
