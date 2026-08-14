@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Bento Dashboard palette — dark base, warm accent pops */
+  --color-ink: #0d0d0f;
+  --color-surface: #131316;
+  --color-surface-2: #19191d;
+  --color-line: #232326;
+  --color-paper: #ededec;
+  --color-muted: #8f8f96;
+  --color-ember: #7c5cff;
+  --color-signal: #7c5cff;
+  --color-violet: #7c5cff;
+  --color-cyan: #5cd9ff;
+  --color-coral: #ff5c8a;
+  --color-amber: #ff9142;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-violet);
+  color: var(--color-ink);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-violet);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 6px;
+}
+
+/* ---- Glass panel (hero content card over the photo) ---- */
+.glass-panel {
+  background: rgba(19, 19, 22, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+/* ---- Bento tiles ---- */
+.bento-tile {
+  position: relative;
+  border-radius: 1rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+/* ---- Border Glow (featured project) ---- */
+.border-glow {
+  position: relative;
+  border-radius: 1rem;
+  padding: 1px;
+  overflow: hidden;
+}
+.border-glow::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--color-violet) 12%,
+    transparent 24%,
+    transparent 100%
+  );
+  animation: spin-glow 5s linear infinite;
+}
+.border-glow-inner {
+  position: relative;
+  border-radius: calc(1rem - 1px);
+  background: var(--color-surface);
+  height: 100%;
+}
+@keyframes spin-glow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- Specular button ---- */
+.specular-btn {
+  position: relative;
+  overflow: hidden;
+}
+.specular-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.65s ease;
+  pointer-events: none;
+}
+.specular-btn:hover::after {
+  left: 130%;
+}
+
+/* ---- Flowing menu link ---- */
+.flow-link {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+.flow-link .flow-label {
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.6, 0, 0.4, 1);
+}
+.flow-link .flow-label-clone {
+  position: absolute;
+  inset: 0;
+  transform: translateY(100%);
+  color: var(--color-violet);
+  transition: transform 0.4s cubic-bezier(0.6, 0, 0.4, 1);
+}
+.flow-link:hover .flow-label {
+  transform: translateY(-100%);
+}
+.flow-link:hover .flow-label-clone {
+  transform: translateY(0%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
