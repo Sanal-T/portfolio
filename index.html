@@ -285,12 +285,17 @@
 
     .hero-visual {
       position: relative;
-      height: 520px;
     }
 
-    .hero-visual svg {
+    .hero-photo {
+      aspect-ratio: 4/5;
       width: 100%;
-      height: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    .hero-stat {
+      text-align: center;
     }
 
     .scroll-indicator {
@@ -387,6 +392,19 @@
 
     .about-visual {
       perspective: 1000px;
+    }
+
+    .about-network {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: visible;
+      border: none;
+      background: transparent;
+    }
+
+    .about-network svg {
+      width: 100%;
+      height: 100%;
     }
 
     .about-photo {
@@ -1007,8 +1025,11 @@
       }
 
       .hero-visual {
-        height: 380px;
         order: -1;
+      }
+
+      .hero-photo {
+        max-width: 260px;
       }
 
       .about-grid {
@@ -1126,18 +1147,18 @@
         </div>
       </div>
       <div class="hero-visual">
-        <svg viewBox="0 0 480 480" fill="none" id="heroSvg">
-          <defs>
-            <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#7dffb3" stop-opacity="0.14" />
-              <stop offset="100%" stop-color="#7dffb3" stop-opacity="0" />
-            </radialGradient>
-          </defs>
-          <circle cx="240" cy="240" r="200" fill="url(#glowGrad)" />
-          <g id="nodeGroup" stroke="#3a3a38" stroke-width="1"></g>
-          <g id="dotGroup"></g>
-          <g id="labelGroup" font-family="JetBrains Mono" font-size="11" fill="#8b8a86" letter-spacing="1"></g>
-        </svg>
+        <div class="about-visual">
+          <div class="about-photo hero-photo">
+            <img src="assets/sanal-photo.jpg" alt="Portrait of Sanal T., AI/ML Engineer" loading="lazy">
+            <span class="bento-spotlight"></span>
+            <div class="about-photo-caption">Sanal T. — AI/ML Engineer</div>
+          </div>
+          <div class="about-stat hero-stat">
+            <span>AI / ML</span>
+            <span class="accent-line">ENGINEERING</span>
+            <span>2026</span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="scroll-indicator">
@@ -1163,15 +1184,19 @@
         </div>
       </div>
       <div class="about-visual">
-        <div class="about-photo">
-          <img src="assets/sanal-photo.jpg" alt="Portrait of Sanal T., AI/ML Engineer" loading="lazy">
-          <span class="bento-spotlight"></span>
-          <div class="about-photo-caption">Sanal T. — AI/ML Engineer</div>
-        </div>
-        <div class="about-stat">
-          <span>AI / ML</span>
-          <span class="accent-line">ENGINEERING</span>
-          <span>2026</span>
+        <div class="about-network">
+          <svg viewBox="0 0 480 480" fill="none" id="heroSvg">
+            <defs>
+              <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#7dffb3" stop-opacity="0.14" />
+                <stop offset="100%" stop-color="#7dffb3" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+            <circle cx="240" cy="240" r="200" fill="url(#glowGrad)" />
+            <g id="nodeGroup" stroke="#3a3a38" stroke-width="1"></g>
+            <g id="dotGroup"></g>
+            <g id="labelGroup" font-family="JetBrains Mono" font-size="11" fill="#8b8a86" letter-spacing="1"></g>
+          </svg>
         </div>
       </div>
     </div>
