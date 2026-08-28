@@ -385,12 +385,23 @@
       gap: 40px;
     }
 
+    .about-visual {
+      perspective: 1000px;
+    }
+
     .about-photo {
       position: relative;
       aspect-ratio: 4/5;
       overflow: hidden;
       border: 1px solid var(--line);
       background: var(--bg-2);
+      transform-style: preserve-3d;
+      transition: transform .4s cubic-bezier(.16, 1, .3, 1), border-color .35s ease;
+      will-change: transform;
+    }
+
+    .about-photo:hover {
+      border-color: var(--line);
     }
 
     .about-photo img {
@@ -398,19 +409,55 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      filter: grayscale(1) contrast(1.08) brightness(0.9);
-      transition: filter .6s ease, transform .8s cubic-bezier(.16, 1, .3, 1);
+      position: relative;
+      z-index: 0;
+      transition: transform .6s cubic-bezier(.16, 1, .3, 1);
     }
 
     .about-photo:hover img {
-      filter: grayscale(0.15) contrast(1.04) brightness(1);
       transform: scale(1.03);
+    }
+
+    .about-photo .bento-spotlight {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(125, 255, 179, 0.16), transparent 60%);
+      opacity: 0;
+      transition: opacity .35s ease;
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+    }
+
+    .about-photo:hover .bento-spotlight {
+      opacity: 1;
+    }
+
+    .about-photo::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      z-index: 3;
+      border-radius: inherit;
+      padding: 1px;
+      background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), var(--accent), transparent 65%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity .35s ease;
+      pointer-events: none;
+    }
+
+    .about-photo:hover::before {
+      opacity: 1;
     }
 
     .about-photo::after {
       content: '';
       position: absolute;
       inset: 0;
+      z-index: 2;
       background: linear-gradient(180deg, transparent 55%, rgba(10, 10, 12, 0.9) 100%);
       pointer-events: none;
     }
@@ -419,7 +466,7 @@
       position: absolute;
       left: 18px;
       bottom: 16px;
-      z-index: 2;
+      z-index: 4;
       font-family: 'JetBrains Mono';
       font-size: 11px;
       letter-spacing: .08em;
@@ -1118,6 +1165,7 @@
       <div class="about-visual">
         <div class="about-photo">
           <img src="assets/sanal-photo.jpg" alt="Portrait of Sanal T., AI/ML Engineer" loading="lazy">
+          <span class="bento-spotlight"></span>
           <div class="about-photo-caption">Sanal T. — AI/ML Engineer</div>
         </div>
         <div class="about-stat">
@@ -1595,6 +1643,32 @@
       });
       btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0)'; });
     });
+
+    // magic bento effect on about photo
+    (function () {
+      const card = document.querySelector('.about-photo');
+      if (!card) return;
+      const maxTilt = 6; // degrees — kept subtle to match the site's restrained motion style
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        card.style.setProperty('--mx', `${x}px`);
+        card.style.setProperty('--my', `${y}px`);
+
+        const px = x / rect.width;
+        const py = y / rect.height;
+        const rotateY = (px - 0.5) * maxTilt * 2;
+        const rotateX = (0.5 - py) * maxTilt * 2;
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    })();
   </script>
 </body>
 
