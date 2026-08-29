@@ -7,7 +7,13 @@ here — this file only defines *how* config is loaded, not the values.
 """
 
 from functools import lru_cache
+from pathlib import Path
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# Resolve .env relative to this file's location (project root), not the
+# current working directory — so it works no matter where uvicorn is launched from.
+ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 
 
 class Settings(BaseSettings):
@@ -26,7 +32,7 @@ class Settings(BaseSettings):
     contact_recipient_email: str = ""
     contact_sender_email: str = ""
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(env_file=str(ENV_PATH), env_file_encoding="utf-8")
 
     @property
     def allowed_origins_list(self) -> list[str]:
