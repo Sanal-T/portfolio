@@ -1558,16 +1558,6 @@
     const techs = ['Python', 'FastAPI', 'PyTorch', 'TensorFlow', 'Scikit-learn', 'LangChain', 'LangGraph', 'RAG', 'LLMs', 'MongoDB', 'MySQL', 'Docker', 'Git', 'REST APIs', 'FAISS', 'Firebase'];
     document.getElementById('techGrid').innerHTML = techs.map(t => `<div class="tech-cell">${t}</div>`).join('');
 
-    // contribution graph — placeholder pattern only, NOT real GitHub data.
-    // Replace with a real GitHub contributions fetch (via backend) when that integration ships.
-    const graph = document.getElementById('contribGraph');
-    let cells = '';
-    for (let i = 0; i < 26 * 7; i++) {
-      const intensity = Math.random();
-      const c = intensity > 0.85 ? '#7dffb3' : intensity > 0.7 ? 'rgba(125,255,179,0.5)' : intensity > 0.5 ? 'rgba(125,255,179,0.22)' : '#1a1a18';
-      cells += `<div class="contrib-cell" style="background:${c}"></div>`;
-    }
-    graph.innerHTML = cells;
 
     // contact form submission
     (function () {
