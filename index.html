@@ -1479,8 +1479,8 @@
     </form>
 
     <div class="contact-links">
-      <a href="mailto:sanalt2024@gmail.com" class="btn-secondary">Email Me ↗</a>
-      <a href="https://linkedin.com/sanalt" target="_blank" rel="noopener" class="btn-secondary">LinkedIn ↗</a>
+      <a href="mailto:sanalt2024@gmail.com" class="btn-secondary" id="emailBtn">Email Me ↗</a>
+      <a href="https://linkedin.com/in/sanalt" target="_blank" rel="noopener" class="btn-secondary">LinkedIn ↗</a>
       <a href="https://github.com/Sanal-T" target="_blank" rel="noopener" class="btn-secondary">GitHub ↗</a>
     </div>
   </section>
@@ -1622,6 +1622,21 @@
       });
       btn.addEventListener('mouseleave', () => { btn.style.transform = 'translate(0,0)'; });
     });
+
+    // email button — copies address to clipboard as a fallback for visitors
+    // without a default mail client configured (mailto links otherwise fail silently)
+    (function () {
+      const emailBtn = document.getElementById('emailBtn');
+      if (!emailBtn) return;
+      const originalText = emailBtn.textContent;
+
+      emailBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText('sanalt2024@gmail.com').then(() => {
+          emailBtn.textContent = 'Copied ✓';
+          setTimeout(() => { emailBtn.textContent = originalText; }, 2000);
+        }).catch(() => { });
+      });
+    })();
 
     // magic bento effect on about photo
     (function () {
