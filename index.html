@@ -287,12 +287,56 @@
       position: relative;
     }
 
-    .hero-photo {
-      aspect-ratio: 1;
+    @keyframes rotate-border {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .about-photo-wrap {
+      position: relative;
       width: 100%;
       max-width: 340px;
+      aspect-ratio: 1;
       margin: 0 auto;
       border-radius: 50%;
+      padding: 3px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(125, 255, 179, 0.2), 0 0 45px rgba(143, 125, 255, 0.12);
+      transition: transform .4s cubic-bezier(.16, 1, .3, 1), box-shadow 0.4s ease;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .about-photo-wrap:hover {
+      box-shadow: 0 0 35px rgba(125, 255, 179, 0.35), 0 0 60px rgba(143, 125, 255, 0.25);
+    }
+
+    .about-photo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0%,
+        var(--accent) 25%,
+        #ffffff 45%,
+        var(--accent-2) 65%,
+        transparent 85%
+      );
+      animation: rotate-border 3.5s linear infinite;
+    }
+
+    .hero-photo {
+      width: 100%;
+      height: 100%;
+      margin: 0 auto;
     }
 
     .hero-stat {
@@ -410,14 +454,13 @@
 
     .about-photo {
       position: relative;
+      width: 100%;
+      height: 100%;
       aspect-ratio: 1;
       border-radius: 50%;
       overflow: hidden;
-      border: 1px solid var(--line);
       background: var(--bg-2);
-      transform-style: preserve-3d;
-      transition: transform .4s cubic-bezier(.16, 1, .3, 1), border-color .35s ease;
-      will-change: transform;
+      z-index: 1;
     }
 
     .about-photo:hover {
@@ -1032,7 +1075,7 @@
         order: -1;
       }
 
-      .hero-photo {
+      .about-photo-wrap {
         max-width: 260px;
       }
 
@@ -1152,10 +1195,12 @@
       </div>
       <div class="hero-visual">
         <div class="about-visual">
-          <div class="about-photo hero-photo">
-            <img src="assets/sanal-photo.jpg" alt="Portrait of Sanal T., AI/ML Engineer" loading="lazy">
-            <span class="bento-spotlight"></span>
-            <div class="about-photo-caption">Sanal T. — AI/ML Engineer</div>
+          <div class="about-photo-wrap">
+            <div class="about-photo hero-photo">
+              <img src="assets/sanal-photo.jpg" alt="Portrait of Sanal T., AI/ML Engineer" loading="lazy">
+              <span class="bento-spotlight"></span>
+              <div class="about-photo-caption">Sanal T. — AI/ML Engineer</div>
+            </div>
           </div>
           <div class="about-stat hero-stat">
             <span>AI / ML</span>
@@ -1644,7 +1689,7 @@
 
     // magic bento effect on about photo
     (function () {
-      const card = document.querySelector('.about-photo');
+      const card = document.querySelector('.about-photo-wrap');
       if (!card) return;
       const maxTilt = 6; // degrees — kept subtle to match the site's restrained motion style
 
