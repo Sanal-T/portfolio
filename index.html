@@ -9,6 +9,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap"
     rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
   <style>
     :root {
       --bg: #0a0a0c;
@@ -632,12 +633,21 @@
     }
 
     .expertise-tags span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-size: 11px;
       font-family: 'JetBrains Mono';
       color: var(--ink-dim);
       border: 1px solid var(--line);
       padding: 5px 10px;
       letter-spacing: .02em;
+      border-radius: 4px;
+      transition: all .2s ease;
+    }
+
+    .expertise-tags span i {
+      font-size: 13px;
     }
 
     /* WORK */
@@ -1259,36 +1269,62 @@
       <div class="expertise-row">
         <div class="expertise-num">01</div>
         <div class="expertise-title">Artificial Intelligence</div>
-        <div class="expertise-tags"><span>ML</span><span>Deep Learning</span><span>NLP</span><span>LLM Apps</span></div>
+        <div class="expertise-tags">
+          <span><i class="devicon-python-plain colored"></i> Python</span>
+          <span><i class="devicon-pytorch-original colored"></i> PyTorch</span>
+          <span><i class="devicon-tensorflow-line colored"></i> TensorFlow</span>
+          <span><i class="devicon-scikitlearn-plain colored"></i> Scikit-Learn</span>
+        </div>
       </div>
       <div class="expertise-row">
         <div class="expertise-num">02</div>
         <div class="expertise-title">Agentic AI</div>
-        <div class="expertise-tags"><span>Tool Calling</span><span>Orchestration</span><span>Planning</span><span>State
-            Mgmt</span></div>
+        <div class="expertise-tags">
+          <span><i class="devicon-python-plain colored"></i> LangChain</span>
+          <span><i class="devicon-fastapi-plain colored"></i> Tool Calling</span>
+          <span><i class="devicon-cog-plain"></i> Orchestration</span>
+          <span><i class="devicon-json-plain colored"></i> State Mgmt</span>
+        </div>
       </div>
       <div class="expertise-row">
         <div class="expertise-num">03</div>
         <div class="expertise-title">RAG Systems</div>
-        <div class="expertise-tags"><span>Retrieval</span><span>Embeddings</span><span>Vector
-            Search</span><span>Semantic Search</span></div>
+        <div class="expertise-tags">
+          <span><i class="devicon-postgresql-plain colored"></i> Vector DBs</span>
+          <span><i class="devicon-python-plain colored"></i> FAISS</span>
+          <span><i class="devicon-network-plain"></i> Embeddings</span>
+          <span><i class="devicon-search-plain"></i> Semantic Search</span>
+        </div>
       </div>
       <div class="expertise-row">
         <div class="expertise-num">04</div>
         <div class="expertise-title">Backend Engineering</div>
-        <div class="expertise-tags"><span>Python</span><span>FastAPI</span><span>REST APIs</span><span>Auth</span></div>
+        <div class="expertise-tags">
+          <span><i class="devicon-python-plain colored"></i> Python</span>
+          <span><i class="devicon-fastapi-plain colored"></i> FastAPI</span>
+          <span><i class="devicon-postgresql-plain colored"></i> PostgreSQL</span>
+          <span><i class="devicon-express-original"></i> REST APIs</span>
+        </div>
       </div>
       <div class="expertise-row">
         <div class="expertise-num">05</div>
         <div class="expertise-title">Machine Learning</div>
-        <div class="expertise-tags"><span>Model Dev</span><span>Evaluation</span><span>Prediction</span><span>Data
-            Processing</span></div>
+        <div class="expertise-tags">
+          <span><i class="devicon-pandas-plain colored"></i> Pandas</span>
+          <span><i class="devicon-numpy-original colored"></i> NumPy</span>
+          <span><i class="devicon-jupyter-plain colored"></i> Jupyter</span>
+          <span><i class="devicon-scikitlearn-plain colored"></i> Scikit-Learn</span>
+        </div>
       </div>
       <div class="expertise-row">
         <div class="expertise-num">06</div>
         <div class="expertise-title">AI Infrastructure</div>
-        <div class="expertise-tags"><span>Docker</span><span>Model
-            Serving</span><span>Databases</span><span>Deployment</span></div>
+        <div class="expertise-tags">
+          <span><i class="devicon-docker-plain colored"></i> Docker</span>
+          <span><i class="devicon-git-plain colored"></i> Git</span>
+          <span><i class="devicon-linux-plain"></i> Linux</span>
+          <span><i class="devicon-amazonwebservices-plain-wordmark colored"></i> AWS</span>
+        </div>
       </div>
     </div>
   </section>
