@@ -588,6 +588,46 @@
       margin-top: 4px;
     }
 
+    /* ELECTRIC BORDER */
+    .electric-border {
+      position: relative;
+    }
+
+    .electric-border::before {
+      content: '';
+      position: absolute;
+      inset: 14px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      pointer-events: none;
+      filter: url(#electricNoise);
+      opacity: .5;
+    }
+
+    .electric-border::after {
+      content: '';
+      position: absolute;
+      inset: 14px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      pointer-events: none;
+      filter: blur(6px);
+      opacity: .22;
+      animation: electricPulse 3.5s ease-in-out infinite;
+    }
+
+    @keyframes electricPulse {
+
+      0%,
+      100% {
+        opacity: .16;
+      }
+
+      50% {
+        opacity: .34;
+      }
+    }
+
     /* SECTION LABELS */
     .section {
       padding: 140px 48px;
@@ -1413,6 +1453,16 @@
   <div class="grain"></div>
   <div class="glow-cursor" id="glow"></div>
 
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="electricNoise" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="7" result="noise">
+        <animate id="electricAnim" attributeName="baseFrequency" values="0.012 0.018;0.02 0.03;0.012 0.018" dur="8s"
+          repeatCount="indefinite" />
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+
   <nav id="nav">
     <div class="logo">SANAL T.</div>
     <ul class="nav-links">
@@ -1427,7 +1477,7 @@
   </nav>
 
   <!-- HERO -->
-  <section class="hero" id="home">
+  <section class="hero electric-border" id="home">
     <div class="console-grid">
       <div class="console-card console-left">
         <div class="console-card-header">
@@ -1469,7 +1519,7 @@
   </section>
 
   <!-- ABOUT -->
-  <section class="section reveal" id="about">
+  <section class="section reveal electric-border" id="about">
     <div class="section-eyebrow">01 / About</div>
     <h2 class="section-heading">ENGINEERING WITH AI AT THE CORE.</h2>
     <div class="about-grid">
@@ -1505,7 +1555,7 @@
   </section>
 
   <!-- EXPERTISE -->
-  <section class="section reveal" id="skills">
+  <section class="section reveal electric-border" id="skills">
     <div class="section-eyebrow">02 / Capabilities</div>
     <h2 class="section-heading">WHAT I WORK WITH</h2>
     <div style="margin-top:60px;">
@@ -1573,7 +1623,7 @@
   </section>
 
   <!-- WORK -->
-  <section class="section reveal" id="work">
+  <section class="section reveal electric-border" id="work">
     <div class="work-intro">
       <div class="section-eyebrow">03 / Selected Work</div>
       <h2 class="section-heading">SELECTED WORK</h2>
@@ -1710,7 +1760,7 @@
   </section>
 
   <!-- EXPERIENCE -->
-  <section class="section reveal" id="experience">
+  <section class="section reveal electric-border" id="experience">
     <div class="section-eyebrow">04 / Journey</div>
     <h2 class="section-heading">EXPERIENCE &amp; JOURNEY</h2>
     <div class="timeline">
@@ -1749,7 +1799,7 @@
   </section>
 
   <!-- PHILOSOPHY -->
-  <section class="philosophy reveal">
+  <section class="philosophy reveal electric-border">
     <div class="philosophy-headline">BUILD.<br>TEST.<br>LEARN.<br>ITERATE.</div>
     <p class="philosophy-text">I believe good AI engineering is not simply about using the largest model. It is about
       designing reliable systems around models — combining data, retrieval, tools, APIs, evaluation, security, and
@@ -1758,7 +1808,7 @@
 
 
   <!-- CONTACT -->
-  <section class="contact reveal" id="contact">
+  <section class="contact reveal electric-border" id="contact">
     <div class="section-eyebrow">07 / Contact</div>
     <h2 class="contact-headline">HAVE AN IDEA<br>WORTH BUILDING?</h2>
     <p class="contact-text">Whether you're building an AI product, exploring intelligent automation, or looking for an
