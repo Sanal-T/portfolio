@@ -1,8 +1,12 @@
 import Navbar from "./components/Navbar";
-import BentoGrid from "./components/BentoGrid";
-import Projects from "./components/Projects";
-import Experience from "./components/Experience";
-import Contact from "./components/Contact";
+import InfoHero from "./components/InfoHero";
+import DescriptionCapabilities from "./components/DescriptionCapabilities";
+import VerticalExperience from "./components/VerticalExperience";
+import Certifications from "./components/Certifications";
+import ToolsFamiliar from "./components/ToolsFamiliar";
+import GithubDetails from "./components/GithubDetails";
+import ProjectsSection from "./components/ProjectsSection";
+import CommunicationSection from "./components/CommunicationSection";
 import Footer from "./components/Footer";
 import Silk from "./components/Silk";
 
@@ -20,18 +24,36 @@ export default function App() {
         />
       </div>
 
-      {/* Main Content */}
+      {/* Main Content in exact user-requested sequence */}
       <div className="relative z-10">
         <Navbar />
         <main>
-          <BentoGrid />
-          <Projects />
-          <Experience />
-          <Contact />
+          {/* 1. Info section with photo */}
+          <InfoHero />
+          
+          {/* 2. Description and capabilities */}
+          <DescriptionCapabilities />
+          
+          {/* 3. Experience as a vertical line connecting downwards */}
+          <VerticalExperience />
+          
+          {/* 4. Certifications */}
+          <Certifications />
+          
+          {/* 5. Tools familiar */}
+          <ToolsFamiliar />
+          
+          {/* 6. Github details */}
+          <GithubDetails />
+          
+          {/* 7. Projects */}
+          <ProjectsSection />
+          
+          {/* 8. Communication */}
+          <CommunicationSection />
         </main>
         <Footer />
       </div>
     </div>
   );
 }
-
