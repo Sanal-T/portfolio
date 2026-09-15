@@ -3,9 +3,13 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import { profile } from "../data/content";
 
 const links = [
-  { href: "#work", label: "Work" },
-  { href: "#stack", label: "Skills" },
+  { href: "#info", label: "Info" },
+  { href: "#about", label: "About" },
   { href: "#experience", label: "Experience" },
+  { href: "#certifications", label: "Certs" },
+  { href: "#tools", label: "Tools" },
+  { href: "#github", label: "GitHub" },
+  { href: "#projects", label: "Projects" },
   { href: "#contact", label: "Contact" },
 ];
 
