@@ -13,7 +13,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from config import get_settings
-from routes import contact
+from routes import contact, github
 
 settings = get_settings()
 
@@ -27,6 +27,7 @@ app.add_middleware(
 )
 
 app.include_router(contact.router)
+app.include_router(github.router)
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 INDEX_FILE = ROOT_DIR / "index.html"
