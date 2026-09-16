@@ -44,10 +44,11 @@ def send_contact_email(name: str, email: str, message: str, settings: Settings) 
     )
 
     try:
-        with smtplib.SMTP(settings.smtp_host, settings.smtp_port) as server:
+        with smtplib.SMTP(settings.smtp_host, settings.smtp_port, timeout=10) as server:
             if settings.smtp_use_tls:
                 server.starttls()
             server.login(settings.smtp_username, settings.smtp_password)
             server.send_message(msg)
     except Exception as exc:
-        raise EmailDeliveryError("Failed to send email.") from exc
+        print(f"[ERROR] SMTP sending error: {exc}")
+        raise EmailDeliveryError(f"Failed to send email: {exc}") from exc

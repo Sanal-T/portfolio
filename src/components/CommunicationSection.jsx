@@ -30,14 +30,19 @@ export default function CommunicationSection() {
         body: JSON.stringify(formData),
       });
 
-      const data = await res.json();
-      if (res.ok && data.success) {
+      const data = await res.json().catch(() => null);
+
+      if (res.ok && data?.success) {
         setStatus("success");
         setStatusMsg(data.message || "Message sent successfully! I'll get back to you soon.");
         setFormData({ name: "", email: "", message: "" });
       } else {
         setStatus("error");
-        setStatusMsg(data.message || "Failed to send message. Please try again or email directly.");
+        setStatusMsg(
+          data?.message ||
+            (Array.isArray(data?.detail) ? data.detail[0]?.msg : null) ||
+            "Failed to send message. Please try again or email directly."
+        );
       }
     } catch (_err) {
       setStatus("error");

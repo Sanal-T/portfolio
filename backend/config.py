@@ -19,7 +19,7 @@ ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 class Settings(BaseSettings):
     # General
     environment: str = "development"
-    allowed_origins: str = "http://localhost:8000,http://127.0.0.1:8000"
+    allowed_origins: str = "http://localhost:8000,http://127.0.0.1:8000,http://localhost:5173,http://127.0.0.1:5173"
 
     # Email service (SMTP)
     smtp_host: str = ""
@@ -39,7 +39,6 @@ class Settings(BaseSettings):
         return [origin.strip() for origin in self.allowed_origins.split(",") if origin.strip()]
 
 
-@lru_cache
 def get_settings() -> Settings:
-    """Cached settings instance — env is read once per process."""
+    """Settings instance read dynamically — always reflects current .env."""
     return Settings()

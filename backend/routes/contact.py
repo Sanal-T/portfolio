@@ -41,7 +41,8 @@ def submit_contact_form(
 
     try:
         send_contact_email(name=name, email=payload.email, message=message, settings=settings)
-    except EmailDeliveryError:
+    except EmailDeliveryError as exc:
+        print(f"[ERROR] Contact form delivery error: {exc}")
         return ContactResponse(
             success=False,
             message="Something went wrong while sending your message. Please try again shortly.",
