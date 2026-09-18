@@ -5,7 +5,13 @@ Serves the static portfolio (index.html) and the API routes. Keep this file
 thin — route logic lives in routes/, business logic lives in services/.
 """
 
+import sys
 from pathlib import Path
+
+# Ensure backend directory is in sys.path so imports like `import config` work from any working directory
+BACKEND_DIR = Path(__file__).resolve().parent
+if str(BACKEND_DIR) not in sys.path:
+    sys.path.insert(0, str(BACKEND_DIR))
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

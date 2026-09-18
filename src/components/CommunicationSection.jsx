@@ -12,6 +12,13 @@ export default function CommunicationSection() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
@@ -169,9 +176,14 @@ export default function CommunicationSection() {
               </div>
 
               <div>
-                <label htmlFor="contact-message" className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-muted">
-                  Message
-                </label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label htmlFor="contact-message" className="block font-mono text-xs uppercase tracking-wider text-muted">
+                    Message
+                  </label>
+                  <span className="font-mono text-[10px] text-muted/60">
+                    Press <kbd className="rounded bg-surface px-1 text-paper">Enter</kbd> to send, <kbd className="rounded bg-surface px-1 text-paper">Shift+Enter</kbd> for new line
+                  </span>
+                </div>
                 <textarea
                   id="contact-message"
                   name="message"
@@ -179,6 +191,7 @@ export default function CommunicationSection() {
                   required
                   value={formData.message}
                   onChange={handleChange}
+                  onKeyDown={handleKeyDown}
                   placeholder="Tell me about your project, role, or question..."
                   className="w-full rounded-lg border border-line bg-surface-2 px-4 py-2.5 text-sm text-paper placeholder-muted/60 transition-colors focus:border-violet focus:outline-none"
                 />
