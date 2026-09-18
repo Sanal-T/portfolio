@@ -25,7 +25,7 @@ export default function GithubDetails() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("All");
 
-  // Fetch Live GitHub Activity & Repos from our backend endpoint
+  // Fetch Live GitHub Activity & Repos from backend endpoint
   const fetchGithubSummary = async () => {
     setLoading(true);
     try {
@@ -39,7 +39,6 @@ export default function GithubDetails() {
       }
       throw new Error("Invalid response format");
     } catch (_err) {
-      // Direct Fallback to GitHub Public REST API if backend is unreachable
       try {
         const reposRes = await fetch(
           `https://api.github.com/users/${githubDetails.username}/repos?sort=updated&per_page=100`
@@ -124,21 +123,45 @@ export default function GithubDetails() {
     return ["All", ...Array.from(set)];
   }, [githubData]);
 
-  // Heatmap intensity helper (GitHub Emerald / Violet theme)
+  // Official GitHub Dark Mode Green Color Palette
   const getIntensityClass = (level) => {
     switch (level) {
       case 1:
-        return "bg-violet/30 border-violet/40 text-violet";
+        return "bg-[#0e4429] border-[#0e4429]";
       case 2:
-        return "bg-violet/60 border-violet/70 text-paper";
+        return "bg-[#006d32] border-[#006d32]";
       case 3:
-        return "bg-violet border-violet text-paper shadow-sm shadow-violet/30";
+        return "bg-[#26a641] border-[#26a641] shadow-sm shadow-[#26a641]/30";
       case 4:
-        return "bg-emerald-400 border-emerald-300 text-ink font-bold shadow-md shadow-emerald-400/40";
+        return "bg-[#39d353] border-[#39d353] shadow-md shadow-[#39d353]/40 font-bold";
       default:
-        return "bg-surface-2/60 border-line/40";
+        return "bg-[#161b22] border-[#21262d]";
     }
   };
+
+  // Strictly extract the last 90 days (3 months)
+  const last90Days = useMemo(() => {
+    if (!githubData?.heatmap_90d) return [];
+    return githubData.heatmap_90d.slice(-91);
+  }, [githubData]);
+
+  // Compute month labels for the last 3 months
+  const monthLabels = useMemo(() => {
+    if (!last90Days || last90Days.length === 0) return [];
+    const months = [];
+    let currentMonth = "";
+    last90Days.forEach((day) => {
+      if (day.date) {
+        const d = new Date(day.date);
+        const monthName = d.toLocaleString("en-US", { month: "short" });
+        if (monthName !== currentMonth) {
+          currentMonth = monthName;
+          months.push(monthName);
+        }
+      }
+    });
+    return months;
+  }, [last90Days]);
 
   return (
     <section id="github" className="relative border-t border-line px-6 py-20">
@@ -199,7 +222,7 @@ export default function GithubDetails() {
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
         >
           <div className="bento-tile p-5 flex flex-col justify-between">
-            <div className="flex items-center justify-between text-violet mb-2">
+            <div className="flex items-center justify-between text-emerald-400 mb-2">
               <span className="font-mono text-[11px] uppercase tracking-wider text-muted">3-Month Contributions</span>
               <Flame size={18} />
             </div>
@@ -207,7 +230,7 @@ export default function GithubDetails() {
               {githubData?.stats_3m?.total_contributions_3m ?? 84}{" "}
               <span className="text-xs font-mono font-normal text-muted">contributions</span>
             </p>
-            <p className="font-mono text-[10px] text-violet mt-1">Last 90 Days Live</p>
+            <p className="font-mono text-[10px] text-emerald-400 mt-1">Last 90 Days Live</p>
           </div>
 
           <div className="bento-tile p-5 flex flex-col justify-between">
@@ -235,14 +258,14 @@ export default function GithubDetails() {
           </div>
 
           <div className="bento-tile p-5 flex flex-col justify-between">
-            <div className="flex items-center justify-between text-coral mb-2">
+            <div className="flex items-center justify-between text-violet mb-2">
               <span className="font-mono text-[11px] uppercase tracking-wider text-muted">Top Stack</span>
               <Code size={18} />
             </div>
             <p className="font-display text-2xl font-bold text-paper truncate">
               {githubData?.stats_3m?.primary_language ?? "Python / JS"}
             </p>
-            <p className="font-mono text-[10px] text-coral mt-1">Primary Language</p>
+            <p className="font-mono text-[10px] text-violet mt-1">Primary Language</p>
           </div>
         </motion.div>
 
@@ -257,7 +280,7 @@ export default function GithubDetails() {
             }`}
           >
             <Flame size={15} />
-            <span>3-Month Live GitHub Calendar</span>
+            <span>GitHub Live Activity (Last 3 Months)</span>
           </button>
 
           <button
@@ -287,7 +310,7 @@ export default function GithubDetails() {
 
         {/* Tab Content Panels */}
         <AnimatePresence mode="wait">
-          {/* TAB 1: OFFICIAL 3-MONTH GITHUB ACTIVITY HEATMAP */}
+          {/* TAB 1: OFFICIAL GITHUB CONTRIBUTION GRAPH (LAST 3 MONTHS) */}
           {activeTab === "activity" && (
             <motion.div
               key="activity-tab"
@@ -300,20 +323,20 @@ export default function GithubDetails() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-line/60">
                 <div>
                   <h3 className="font-display text-xl font-bold text-paper flex items-center gap-2">
-                    <Calendar size={18} className="text-violet" />
-                    <span>Official 3-Month GitHub Contribution Graph</span>
+                    <Calendar size={18} className="text-emerald-400" />
+                    <span>Official GitHub Contribution Graph (Last 3 Months)</span>
                   </h3>
                   <p className="text-xs text-muted mt-1">
-                    Live-synced daily contribution levels fetched directly from GitHub profile calendar.
+                    Live-synced daily contributions fetched directly from your GitHub profile calendar.
                   </p>
                 </div>
                 <div className="flex items-center gap-1.5 font-mono text-[10px] text-muted self-start sm:self-auto">
                   <span>Less</span>
-                  <span className="h-3 w-3 rounded-sm bg-surface-2/60 border border-line/40"></span>
-                  <span className="h-3 w-3 rounded-sm bg-violet/30 border border-violet/40"></span>
-                  <span className="h-3 w-3 rounded-sm bg-violet/60 border border-violet/70"></span>
-                  <span className="h-3 w-3 rounded-sm bg-violet border border-violet"></span>
-                  <span className="h-3 w-3 rounded-sm bg-emerald-400 border border-emerald-300"></span>
+                  <span className="h-3.5 w-3.5 rounded-sm bg-[#161b22] border border-[#21262d]"></span>
+                  <span className="h-3.5 w-3.5 rounded-sm bg-[#0e4429] border border-[#0e4429]"></span>
+                  <span className="h-3.5 w-3.5 rounded-sm bg-[#006d32] border border-[#006d32]"></span>
+                  <span className="h-3.5 w-3.5 rounded-sm bg-[#26a641] border border-[#26a641]"></span>
+                  <span className="h-3.5 w-3.5 rounded-sm bg-[#39d353] border border-[#39d353]"></span>
                   <span>More</span>
                 </div>
               </div>
@@ -324,33 +347,41 @@ export default function GithubDetails() {
                 </div>
               ) : (
                 <div>
-                  {/* Heatmap Grid (90 Days) */}
-                  <div className="grid grid-flow-col grid-rows-7 gap-2 overflow-x-auto pb-4 no-scrollbar">
-                    {githubData?.heatmap_90d?.map((day, idx) => (
-                      <div
-                        key={day.date || idx}
-                        title={day.tooltip || `${day.count} contributions on ${day.date}`}
-                        className={`h-4 w-4 rounded-md border transition-transform hover:scale-125 cursor-pointer ${getIntensityClass(
-                          day.level
-                        )}`}
-                      />
-                    ))}
-                  </div>
+                  {/* Official GitHub Contribution Calendar Layout (Last 3 Months Only) */}
+                  <div className="flex gap-3 items-start overflow-x-auto pb-4 pt-2 no-scrollbar">
+                    {/* Day of Week Labels */}
+                    <div className="grid grid-rows-7 gap-1.5 font-mono text-[10px] text-muted pt-6 shrink-0 select-none">
+                      <span className="h-3.5"></span>
+                      <span className="h-3.5 leading-none">Mon</span>
+                      <span className="h-3.5"></span>
+                      <span className="h-3.5 leading-none">Wed</span>
+                      <span className="h-3.5"></span>
+                      <span className="h-3.5 leading-none">Fri</span>
+                      <span className="h-3.5"></span>
+                    </div>
 
-                  {/* SVG Heatmap Image Embed Option */}
-                  <div className="mt-8 pt-6 border-t border-line/50 flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="w-full">
-                      <p className="font-mono text-xs text-paper font-semibold mb-3 flex items-center gap-2">
-                        <Activity size={14} className="text-emerald-400" />
-                        <span>Live Sync GitHub Contribution Stream</span>
-                      </p>
-                      <div className="overflow-x-auto rounded-xl border border-line/60 bg-surface-2/40 p-4">
-                        <img
-                          src={`https://ghchart.rshah.org/8b5cf6/${githubDetails.username}`}
-                          alt="Live GitHub Contribution Chart"
-                          className="w-full min-w-[600px] filter drop-shadow-sm"
-                          loading="lazy"
-                        />
+                    {/* 3-Month Heatmap Columns (13 Weeks max) */}
+                    <div className="flex-1 min-w-[500px]">
+                      {/* Month Header Labels */}
+                      <div className="flex justify-between font-mono text-[11px] text-muted mb-2 px-1">
+                        {monthLabels.map((m, i) => (
+                          <span key={i} className="font-semibold text-paper/80">
+                            {m}
+                          </span>
+                        ))}
+                      </div>
+
+                      {/* 13-Week Grid (7 rows per column) */}
+                      <div className="grid grid-flow-col grid-rows-7 gap-1.5">
+                        {last90Days.map((day, idx) => (
+                          <div
+                            key={day.date || idx}
+                            title={day.tooltip || `${day.count} contributions on ${day.date}`}
+                            className={`h-3.5 w-3.5 rounded-sm border transition-transform hover:scale-125 cursor-pointer ${getIntensityClass(
+                              day.level
+                            )}`}
+                          />
+                        ))}
                       </div>
                     </div>
                   </div>
