@@ -17,6 +17,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { githubDetails, profile } from "../data/content";
+import StarBorder from "./StarBorder";
 
 export default function GithubDetails() {
   const [activeTab, setActiveTab] = useState("activity"); // 'activity' | 'repos' | 'feed'
@@ -318,14 +319,15 @@ export default function GithubDetails() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.3 }}
-              className="bento-tile p-6 md:p-8"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-line/60">
-                <div>
-                  <h3 className="font-display text-xl font-bold text-paper flex items-center gap-2">
-                    <Calendar size={18} className="text-emerald-400" />
-                    <span>Official GitHub Contribution Graph (Last 3 Months)</span>
-                  </h3>
+              <StarBorder color="#10b981" speed="6s" borderRadius={24}>
+                <div className="bento-tile p-6 md:p-8">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-line/60">
+                    <div>
+                      <h3 className="font-display text-xl font-bold text-paper flex items-center gap-2">
+                        <Calendar size={18} className="text-emerald-400" />
+                        <span>Official GitHub Contribution Graph (Last 3 Months)</span>
+                      </h3>
                   <p className="text-xs text-muted mt-1">
                     Live-synced daily contributions fetched directly from your GitHub profile calendar.
                   </p>
@@ -438,6 +440,8 @@ export default function GithubDetails() {
                   </div>
                 </div>
               )}
+            </div>
+          </StarBorder>
             </motion.div>
           )}
 

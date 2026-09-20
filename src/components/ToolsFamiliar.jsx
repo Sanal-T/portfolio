@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Wrench, Terminal, Cpu, Database, Shield } from "lucide-react";
 import { skillGroups } from "../data/content";
+import StarBorder from "./StarBorder";
 
 const categoryIcons = {
   "Core Engineering": Terminal,
@@ -38,27 +39,30 @@ export default function ToolsFamiliar() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="bento-tile p-6 hover:border-violet/40 transition-all duration-300"
               >
-                <div className="flex items-center gap-3 mb-5 pb-3 border-b border-line/50">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet/10 text-violet">
-                    <Icon size={18} />
-                  </div>
-                  <h3 className="font-mono text-sm font-semibold uppercase tracking-wider text-paper">
-                    {group.label}
-                  </h3>
-                </div>
+                <StarBorder color="#7df9ff" speed="6s" borderRadius={16} className="h-full">
+                  <div className="bento-tile p-6 hover:border-violet/40 transition-all duration-300 h-full">
+                    <div className="flex items-center gap-3 mb-5 pb-3 border-b border-line/50">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet/10 text-violet">
+                        <Icon size={18} />
+                      </div>
+                      <h3 className="font-mono text-sm font-semibold uppercase tracking-wider text-paper">
+                        {group.label}
+                      </h3>
+                    </div>
 
-                <div className="flex flex-wrap gap-2.5">
-                  {group.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-lg border border-line bg-surface-2/90 px-3.5 py-1.5 font-mono text-xs text-paper/90 transition-all hover:border-violet/50 hover:bg-violet/10 hover:text-paper hover:scale-[1.03]"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                    <div className="flex flex-wrap gap-2.5">
+                      {group.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-lg border border-line bg-surface-2/90 px-3.5 py-1.5 font-mono text-xs text-paper/90 transition-all hover:border-violet/50 hover:bg-violet/10 hover:text-paper hover:scale-[1.03]"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </StarBorder>
               </motion.div>
             );
           })}

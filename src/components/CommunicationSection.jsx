@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Github, Linkedin, Mail, Send, CheckCircle2, AlertCircle, MessageSquare } from "lucide-react";
 import { profile } from "../data/content";
+import StarBorder from "./StarBorder";
 
 export default function CommunicationSection() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -135,12 +136,14 @@ export default function CommunicationSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="bento-tile p-8 lg:col-span-7"
+            className="lg:col-span-7"
           >
-            <div className="flex items-center gap-2 font-mono text-xs text-violet mb-6 pb-4 border-b border-line/50">
-              <MessageSquare size={16} />
-              <span>SEND A DIRECT MESSAGE</span>
-            </div>
+            <StarBorder color="#7c3aed" speed="5s" borderRadius={24}>
+              <div className="bento-tile p-8">
+                <div className="flex items-center gap-2 font-mono text-xs text-violet mb-6 pb-4 border-b border-line/50">
+                  <MessageSquare size={16} />
+                  <span>SEND A DIRECT MESSAGE</span>
+                </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               <div>
@@ -225,9 +228,11 @@ export default function CommunicationSection() {
                 )}
               </button>
             </form>
-          </motion.div>
-        </div>
-      </div>
-    </section>
+          </div>
+        </StarBorder>
+      </motion.div>
+    </div>
+  </div>
+</section>
   );
 }

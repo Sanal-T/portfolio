@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Database, Cpu, Server, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { profile, capabilities } from "../data/content";
+import StarBorder from "./StarBorder";
 
 const iconMap = {
   Database: Database,
@@ -29,36 +30,38 @@ export default function DescriptionCapabilities() {
         </motion.div>
 
         {/* Bio Narrative Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          className="bento-tile mb-12 p-8 md:p-10"
-        >
-          <div className="flex items-center gap-3 font-mono text-xs text-muted mb-4">
-            <span className="h-2 w-2 rounded-full bg-violet animate-pulse" />
-            <span>BIO NARRATIVE</span>
-          </div>
-          <p className="text-base md:text-lg leading-relaxed text-paper/90">
-            {profile.bio}
-          </p>
-          
-          <div className="mt-6 flex flex-wrap gap-4 pt-6 border-t border-line/50 font-mono text-xs text-muted">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={14} className="text-violet" />
-              <span>Production-ready Python / FastAPI</span>
+        <StarBorder color="#7df9ff" speed="6s" borderRadius={24} className="mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="bento-tile p-8 md:p-10"
+          >
+            <div className="flex items-center gap-3 font-mono text-xs text-muted mb-4">
+              <span className="h-2 w-2 rounded-full bg-violet animate-pulse" />
+              <span>BIO NARRATIVE</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={14} className="text-violet" />
-              <span>Vector Search &amp; FAISS Indexing</span>
+            <p className="text-base md:text-lg leading-relaxed text-paper/90">
+              {profile.bio}
+            </p>
+            
+            <div className="mt-6 flex flex-wrap gap-4 pt-6 border-t border-line/50 font-mono text-xs text-muted">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 size={14} className="text-violet" />
+                <span>Production-ready Python / FastAPI</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 size={14} className="text-violet" />
+                <span>Vector Search &amp; FAISS Indexing</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 size={14} className="text-violet" />
+                <span>LangChain Agent Workflows</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={14} className="text-violet" />
-              <span>LangChain Agent Workflows</span>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </StarBorder>
 
         {/* Capabilities Grid */}
         <div className="grid gap-6 sm:grid-cols-2">

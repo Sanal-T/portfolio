@@ -1,17 +1,19 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Github, Linkedin, Mail, FileText, Sparkles, MapPin } from "lucide-react";
 import { profile } from "../data/content";
+import StarBorder from "./StarBorder";
 
 export default function InfoHero() {
   return (
     <section id="info" className="relative min-h-[85vh] flex items-center justify-center px-6 pt-28 pb-16">
       <div className="mx-auto max-w-5xl w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bento-tile relative overflow-hidden p-8 md:p-12"
-        >
+        <StarBorder color="#7c3aed" speed="5s" borderRadius={24} className="w-full">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="bento-tile relative overflow-hidden p-8 md:p-12"
+          >
           {/* Subtle decorative glow orb */}
           <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-violet/15 blur-3xl" />
           <div className="pointer-events-none absolute -left-24 -bottom-24 h-96 w-96 rounded-full bg-cyan/10 blur-3xl" />
@@ -126,7 +128,8 @@ export default function InfoHero() {
             </div>
           </div>
         </motion.div>
-      </div>
-    </section>
-  );
+      </StarBorder>
+    </div>
+  </section>
+);
 }

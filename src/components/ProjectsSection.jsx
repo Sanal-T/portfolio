@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, FolderGit2 } from "lucide-react";
 import BorderGlow from "./BorderGlow";
 import SpotlightCard from "./SpotlightCard";
+import StarBorder from "./StarBorder";
 import { projects } from "../data/content";
 
 const featured = projects.find((p) => p.featured) || projects[0];
@@ -35,12 +36,12 @@ export default function ProjectsSection() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <BorderGlow className="h-full">
+            <StarBorder color="#7df9ff" speed="5s" borderRadius={24} className="w-full">
               <a
                 href={featured.href}
                 target="_blank"
                 rel="noreferrer"
-                className="group flex flex-col justify-between p-8 md:p-10"
+                className="group flex flex-col justify-between p-8 md:p-10 bento-tile"
               >
                 <div>
                   <div className="flex items-center justify-between gap-4">
@@ -73,7 +74,7 @@ export default function ProjectsSection() {
                   ))}
                 </div>
               </a>
-            </BorderGlow>
+            </StarBorder>
           </motion.div>
         )}
 
@@ -87,40 +88,42 @@ export default function ProjectsSection() {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: index * 0.08 }}
             >
-              <a href={p.href} target="_blank" rel="noreferrer" className="block h-full group">
-                <SpotlightCard className="flex h-full flex-col justify-between p-6 transition-colors hover:border-violet/40">
-                  <div>
-                    <div className="relative flex items-start justify-between gap-4 mb-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-surface-2 text-violet border border-line">
-                        <FolderGit2 size={18} />
+              <StarBorder color="#a855f7" speed="6s" borderRadius={16} className="h-full">
+                <a href={p.href} target="_blank" rel="noreferrer" className="block h-full group">
+                  <SpotlightCard className="flex h-full flex-col justify-between p-6 transition-colors hover:border-violet/40">
+                    <div>
+                      <div className="relative flex items-start justify-between gap-4 mb-3">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-surface-2 text-violet border border-line">
+                          <FolderGit2 size={18} />
+                        </div>
+                        <ArrowUpRight
+                          size={18}
+                          className="text-muted transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-violet"
+                        />
                       </div>
-                      <ArrowUpRight
-                        size={18}
-                        className="text-muted transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-violet"
-                      />
+
+                      <h3 className="relative font-display text-lg font-semibold text-paper group-hover:text-violet transition-colors">
+                        {p.name}
+                      </h3>
+
+                      <p className="relative mt-2 text-xs leading-relaxed text-muted">
+                        {p.description}
+                      </p>
                     </div>
 
-                    <h3 className="relative font-display text-lg font-semibold text-paper group-hover:text-violet transition-colors">
-                      {p.name}
-                    </h3>
-
-                    <p className="relative mt-2 text-xs leading-relaxed text-muted">
-                      {p.description}
-                    </p>
-                  </div>
-
-                  <div className="relative mt-6 flex flex-wrap gap-1.5 pt-4 border-t border-line/40">
-                    {p.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-md bg-surface-2/80 px-2 py-0.5 font-mono text-[10px] text-muted"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </SpotlightCard>
-              </a>
+                    <div className="relative mt-6 flex flex-wrap gap-1.5 pt-4 border-t border-line/40">
+                      {p.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-md bg-surface-2/80 px-2 py-0.5 font-mono text-[10px] text-muted"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </SpotlightCard>
+                </a>
+              </StarBorder>
             </motion.div>
           ))}
         </div>
