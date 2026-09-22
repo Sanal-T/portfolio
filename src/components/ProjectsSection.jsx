@@ -36,7 +36,7 @@ export default function ProjectsSection() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <StarBorder color="#7df9ff" speed="5s" borderRadius={24} className="w-full">
+            <StarBorder color="#7c3aed" speed="5s" borderRadius={24} className="w-full">
               <a
                 href={featured.href}
                 target="_blank"

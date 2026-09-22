@@ -43,7 +43,7 @@ export default function VerticalExperience() {
                 </div>
 
                 {/* Experience Card attached to vertical line */}
-                <StarBorder color={index % 2 === 0 ? "#7c3aed" : "#06b6d4"} speed="6s" borderRadius={16}>
+                <StarBorder color={index % 2 === 0 ? "#7c3aed" : "#ec4899"} speed="6s" borderRadius={16}>
                   <div className="bento-tile p-6 sm:p-8 hover:border-violet/40 transition-all duration-300">
                     <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
                       <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-violet">

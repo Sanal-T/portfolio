@@ -4,7 +4,7 @@ import './StarBorder.css';
 export default function StarBorder({
   as: Component = 'div',
   className = '',
-  color = '#7df9ff',
+  color = '#7c3aed',
   speed = '6s',
   thickness = 1.5,
   borderRadius = 24,

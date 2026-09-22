@@ -30,7 +30,7 @@ export default function DescriptionCapabilities() {
         </motion.div>
 
         {/* Bio Narrative Card */}
-        <StarBorder color="#7df9ff" speed="6s" borderRadius={24} className="mb-12">
+        <StarBorder color="#7c3aed" speed="6s" borderRadius={24} className="mb-12">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -45,7 +45,7 @@ export default function DescriptionCapabilities() {
             <p className="text-base md:text-lg leading-relaxed text-paper/90">
               {profile.bio}
             </p>
-            
+
             <div className="mt-6 flex flex-wrap gap-4 pt-6 border-t border-line/50 font-mono text-xs text-muted">
               <div className="flex items-center gap-2">
                 <CheckCircle2 size={14} className="text-violet" />
