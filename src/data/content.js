@@ -119,6 +119,7 @@ export const skillGroups = [
     tags: [
       "PostgreSQL",
       "Supabase",
+      "Google Cloud (GCP)",
       "MySQL",
       "MongoDB",
       "Firebase / Firestore",
@@ -126,9 +127,10 @@ export const skillGroups = [
     ],
   },
   {
-    label: "Backend, Cloud & Security",
+    label: "Backend & Security",
     tags: [
-      "Google Cloud (GCP)",
+      "Pydantic",
+      "Postman",
       "JWT Auth",
       "Role-Based Access Control (RBAC)",
       "Uvicorn",

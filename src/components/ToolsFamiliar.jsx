@@ -21,6 +21,7 @@ import {
   SiGo,
   SiSupabase,
   SiGooglecloud,
+  SiPydantic,
 } from "react-icons/si";
 import {
   Database,
@@ -42,6 +43,7 @@ import {
   Cloud,
   Palette,
   FileCode,
+  CheckCircle2,
 } from "lucide-react";
 import { skillGroups } from "../data/content";
 
@@ -49,7 +51,6 @@ const categoryIcons = {
   "Core Engineering": Terminal,
   "AI / GenAI & ML": Cpu,
   "Databases & Storage": Database,
-  "Backend, Cloud & Security": Shield,
   "Backend & Security": Shield,
 };
 
@@ -82,12 +83,14 @@ const techMap = {
 
   PostgreSQL: { icon: SiPostgresql, color: "#4169E1" },
   Supabase: { icon: SiSupabase, color: "#3ECF8E" },
+  "Google Cloud (GCP)": { icon: SiGooglecloud, color: "#4285F4" },
   MySQL: { icon: SiMysql, color: "#4479A1" },
   MongoDB: { icon: SiMongodb, color: "#47A248" },
   "Firebase / Firestore": { icon: SiFirebase, color: "#FFCA28" },
   "Vector Stores": { icon: Database, color: "#a855f7" },
 
-  "Google Cloud (GCP)": { icon: SiGooglecloud, color: "#4285F4" },
+  Pydantic: { icon: SiPydantic || CheckCircle2, color: "#E92063" },
+  Postman: { icon: SiPostman, color: "#FF6C37" },
   "JWT Auth": { icon: KeyRound, color: "#d8b4fe" },
   "Role-Based Access Control (RBAC)": { icon: ShieldCheck, color: "#7c5cff" },
   Uvicorn: { icon: Terminal, color: "#009688" },
@@ -104,14 +107,14 @@ function getTechInfo(tag) {
 
 export default function ToolsFamiliar() {
   return (
-    <section id="tools" className="relative border-t border-line px-6 py-20">
+    <section id="tools" className="relative border-t border-line px-6 py-16">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="mb-12"
+          className="mb-10"
         >
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-violet mb-2">
             05 // Tech Stack
@@ -121,7 +124,7 @@ export default function ToolsFamiliar() {
           </h2>
         </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
           {skillGroups.map((group, index) => {
             const GroupIcon = categoryIcons[group.label] || Wrench;
             return (
@@ -131,19 +134,19 @@ export default function ToolsFamiliar() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="bento-tile p-6 hover:border-violet/40 transition-all duration-300 flex flex-col justify-between"
+                className="bento-tile p-5 hover:border-violet/40 transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-line/50">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet/10 text-violet border border-violet/20">
-                      <GroupIcon size={20} />
+                  <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-line/50">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet/10 text-violet border border-violet/20">
+                      <GroupIcon size={18} />
                     </div>
-                    <h3 className="font-mono text-sm font-semibold uppercase tracking-wider text-paper">
+                    <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-paper">
                       {group.label}
                     </h3>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                     {group.tags.map((tag) => {
                       const tech = getTechInfo(tag);
                       const TechIcon = tech.icon;
@@ -151,26 +154,26 @@ export default function ToolsFamiliar() {
                       return (
                         <motion.div
                           key={tag}
-                          whileHover={{ scale: 1.03, y: -2 }}
+                          whileHover={{ scale: 1.03, y: -1 }}
                           transition={{ duration: 0.2 }}
-                          className="group relative flex items-center gap-3 rounded-xl border border-white/10 bg-surface-2/80 px-3.5 py-2.5 shadow-md hover:border-violet/40 hover:bg-surface-2 hover:shadow-lg hover:shadow-violet/10 cursor-pointer overflow-hidden"
+                          className="group relative flex items-center gap-2.5 rounded-xl border border-white/10 bg-surface-2/80 px-3 py-2 shadow-sm hover:border-violet/40 hover:bg-surface-2 hover:shadow-md hover:shadow-violet/10 cursor-pointer overflow-hidden"
                         >
                           {/* Soft background glow matching brand color on hover */}
                           <div
-                            className="pointer-events-none absolute -inset-2 opacity-0 group-hover:opacity-25 transition-opacity duration-300 blur-xl"
+                            className="pointer-events-none absolute -inset-2 opacity-0 group-hover:opacity-25 transition-opacity duration-300 blur-lg"
                             style={{ background: tech.color }}
                           />
 
                           {/* Icon Container */}
                           <div
-                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-ink/90 transition-transform group-hover:scale-110"
+                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-ink/90 transition-transform group-hover:scale-105"
                             style={{ color: tech.color }}
                           >
-                            <TechIcon size={18} />
+                            <TechIcon size={16} />
                           </div>
 
                           {/* Technology Name */}
-                          <span className="font-mono text-xs font-semibold text-paper/90 group-hover:text-white transition-colors truncate">
+                          <span className="font-mono text-[11px] font-semibold text-paper/90 group-hover:text-white transition-colors truncate">
                             {tag}
                           </span>
                         </motion.div>
