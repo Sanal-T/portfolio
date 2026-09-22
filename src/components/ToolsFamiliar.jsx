@@ -18,6 +18,9 @@ import {
   SiPytorch,
   SiScikitlearn,
   SiPostman,
+  SiGo,
+  SiSupabase,
+  SiGooglecloud,
 } from "react-icons/si";
 import {
   Database,
@@ -36,6 +39,9 @@ import {
   Code,
   KeyRound,
   Bot,
+  Cloud,
+  Palette,
+  FileCode,
 } from "lucide-react";
 import { skillGroups } from "../data/content";
 
@@ -43,31 +49,45 @@ const categoryIcons = {
   "Core Engineering": Terminal,
   "AI / GenAI & ML": Cpu,
   "Databases & Storage": Database,
+  "Backend, Cloud & Security": Shield,
   "Backend & Security": Shield,
 };
 
 const techMap = {
   Python: { icon: SiPython, color: "#3776AB" },
+  Go: { icon: SiGo, color: "#00ADD8" },
   FastAPI: { icon: SiFastapi, color: "#009688" },
+  JavaScript: { icon: SiJavascript, color: "#F7DF1E" },
+  TypeScript: { icon: SiTypescript, color: "#3178C6" },
+  React: { icon: SiReact, color: "#61DAFB" },
+  HTML5: { icon: FileCode, color: "#E34F26" },
+  CSS3: { icon: Palette, color: "#1572B6" },
   SQL: { icon: SiPostgresql, color: "#4169E1" },
   "REST APIs": { icon: SiPostman, color: "#FF6C37" },
   "Git & GitHub": { icon: SiGithub, color: "#F05032" },
   "Object-Oriented Programming": { icon: Code, color: "#a855f7" },
   AsyncIO: { icon: Zap, color: "#3776AB" },
+
   "Generative AI": { icon: Sparkles, color: "#c084fc" },
   LLMs: { icon: Brain, color: "#e879f9" },
+  SLMs: { icon: Brain, color: "#a855f7" },
   "RAG Pipelines": { icon: Layers, color: "#ec4899" },
   LangChain: { icon: Bot, color: "#22c55e" },
   FAISS: { icon: Search, color: "#0668E1" },
   NLP: { icon: MessageSquare, color: "#f43f5e" },
   "Gemini API": { icon: Sparkles, color: "#4285F4" },
-  Ollama: { icon: Cpu, color: "#a855f7" },
+  Ollama: { icon: Cpu, color: "#ffffff" },
   "Machine Learning": { icon: SiScikitlearn, color: "#F7931E" },
   "Deep Learning": { icon: SiPytorch, color: "#EE4C2C" },
+
+  PostgreSQL: { icon: SiPostgresql, color: "#4169E1" },
+  Supabase: { icon: SiSupabase, color: "#3ECF8E" },
   MySQL: { icon: SiMysql, color: "#4479A1" },
   MongoDB: { icon: SiMongodb, color: "#47A248" },
   "Firebase / Firestore": { icon: SiFirebase, color: "#FFCA28" },
   "Vector Stores": { icon: Database, color: "#a855f7" },
+
+  "Google Cloud (GCP)": { icon: SiGooglecloud, color: "#4285F4" },
   "JWT Auth": { icon: KeyRound, color: "#d8b4fe" },
   "Role-Based Access Control (RBAC)": { icon: ShieldCheck, color: "#7c5cff" },
   Uvicorn: { icon: Terminal, color: "#009688" },
@@ -75,8 +95,6 @@ const techMap = {
   "Vite / React Integration": { icon: SiReact, color: "#61DAFB" },
   Docker: { icon: SiDocker, color: "#2496ED" },
   Linux: { icon: SiLinux, color: "#FCC624" },
-  TypeScript: { icon: SiTypescript, color: "#3178C6" },
-  JavaScript: { icon: SiJavascript, color: "#F7DF1E" },
   TailwindCSS: { icon: SiTailwindcss, color: "#06B6D4" },
 };
 
