@@ -164,7 +164,7 @@ export default function GithubDetails() {
   }, [last90Days]);
 
   return (
-    <section id="github" className="relative border-t border-line px-6 py-20">
+    <section id="github" className="relative px-6 py-3 sm:py-4">
       <div className="mx-auto max-w-5xl">
         {/* Section Header */}
         <motion.div

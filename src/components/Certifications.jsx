@@ -4,7 +4,7 @@ import { certifications } from "../data/content";
 
 export default function Certifications() {
   return (
-    <section id="certifications" className="relative border-t border-line px-6 py-20">
+    <section id="certifications" className="relative px-6 py-3 sm:py-4">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

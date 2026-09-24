@@ -91,7 +91,9 @@ function TechIconButton({ tool }) {
 
   return (
     <div
-      className="relative flex flex-col items-center"
+      className={`relative flex flex-col items-center transition-z ${
+        isHovered ? "z-30" : "z-10"
+      }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -103,7 +105,7 @@ function TechIconButton({ tool }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.95 }}
             transition={{ duration: 0.16, ease: "easeOut" }}
-            className="absolute bottom-full mb-3 z-30 pointer-events-none flex flex-col items-center"
+            className="absolute bottom-full mb-2.5 z-40 pointer-events-none flex flex-col items-center"
           >
             <div className="rounded-xl border border-white/15 bg-ink/95 px-3.5 py-1.5 shadow-2xl backdrop-blur-md text-center min-w-[85px]">
               <p className="font-mono text-xs font-bold text-paper whitespace-nowrap">
@@ -145,36 +147,32 @@ function TechIconButton({ tool }) {
 
 export default function ToolsFamiliar() {
   return (
-    <section id="tools" className="relative border-t border-line px-6 py-20">
+    <section id="tools" className="relative px-6 py-3 sm:py-4">
       <div className="mx-auto max-w-5xl">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
-        >
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-violet mb-2">
-            05 // Tech Stack
-          </p>
-          <h2 className="font-display text-3xl font-medium tracking-tight text-paper sm:text-4xl">
-            Tools of the Trade
-          </h2>
-          <p className="mt-2 text-sm font-mono text-muted">
-            Hover over each icon to explore my stack — from frontend frameworks to security &amp; AI tooling.
-          </p>
-        </motion.div>
-
         {/* Single Continuous Bento Panel */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5 }}
-          className="bento-tile p-6 sm:p-8 hover:border-violet/40 transition-all duration-300"
+          className="bento-tile px-6 pb-8 pt-6 sm:px-8 sm:pb-10 sm:pt-8 hover:border-violet/40 transition-all duration-300 overflow-visible relative"
         >
-          <div className="flex flex-wrap gap-3.5 sm:gap-5 items-center justify-center sm:justify-start">
+          {/* Header Inside Bento Tile */}
+          <div className="mb-6">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-3 py-1 font-mono text-[11px] text-muted mb-3">
+              <span className="text-violet font-bold">&lt;/&gt;</span>
+              <span>05 // TECH_STACK.MANIFEST</span>
+            </div>
+            <h2 className="font-display text-2xl font-medium tracking-tight text-paper sm:text-3xl">
+              Tools of the Trade
+            </h2>
+            <p className="mt-1.5 text-xs sm:text-sm font-mono text-muted">
+              Hover over each icon to explore my stack — from frontend frameworks to security &amp; AI tooling.
+            </p>
+          </div>
+
+          {/* Icons Flex Grid */}
+          <div className="flex flex-wrap gap-4 sm:gap-6 items-center justify-center sm:justify-start">
             {allTools.map((tool) => (
               <TechIconButton key={tool.name} tool={tool} />
             ))}
