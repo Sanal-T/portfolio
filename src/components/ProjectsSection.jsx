@@ -10,7 +10,7 @@ const otherProjects = projects.filter((p) => !p.featured);
 
 export default function ProjectsSection() {
   return (
-    <section id="projects" className="relative border-t border-line px-6 py-20">
+    <section id="projects" className="relative px-6 py-3 sm:py-4">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

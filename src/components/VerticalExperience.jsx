@@ -5,7 +5,7 @@ import StarBorder from "./StarBorder";
 
 export default function VerticalExperience() {
   return (
-    <section id="experience" className="relative border-t border-line px-6 py-20">
+    <section id="experience" className="relative px-6 py-3 sm:py-4">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

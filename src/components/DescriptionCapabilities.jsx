@@ -184,7 +184,7 @@ function CapabilityCard({ cap, index }) {
 
 export default function DescriptionCapabilities() {
   return (
-    <section id="about" className="relative border-t border-line px-6 py-20 overflow-hidden">
+    <section id="about" className="relative px-6 py-3 sm:py-4 overflow-hidden">
       {/* Background Ambient Glow Orbs */}
       <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-96 w-96 rounded-full bg-violet/10 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-40 right-10 h-80 w-80 rounded-full bg-cyan/10 blur-[120px]" />
