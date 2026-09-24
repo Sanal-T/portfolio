@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   SiPython,
   SiFastapi,
@@ -21,7 +22,6 @@ import {
   SiGo,
   SiSupabase,
   SiGooglecloud,
-  SiPydantic,
 } from "react-icons/si";
 import {
   Database,
@@ -52,6 +52,15 @@ const categoryIcons = {
   "AI / GenAI & ML": Cpu,
   "Databases & Storage": Database,
   "Backend & Security": Shield,
+  "Backend, Cloud & Security": Shield,
+};
+
+const categoryShortNames = {
+  "Core Engineering": "CORE ENG",
+  "AI / GenAI & ML": "AI / ML",
+  "Databases & Storage": "DATABASE",
+  "Backend & Security": "BACKEND",
+  "Backend, Cloud & Security": "BACKEND / CLOUD",
 };
 
 const techMap = {
@@ -89,7 +98,7 @@ const techMap = {
   "Firebase / Firestore": { icon: SiFirebase, color: "#FFCA28" },
   "Vector Stores": { icon: Database, color: "#a855f7" },
 
-  Pydantic: { icon: SiPydantic || CheckCircle2, color: "#E92063" },
+  Pydantic: { icon: CheckCircle2, color: "#E92063" },
   Postman: { icon: SiPostman, color: "#FF6C37" },
   "JWT Auth": { icon: KeyRound, color: "#d8b4fe" },
   "Role-Based Access Control (RBAC)": { icon: ShieldCheck, color: "#7c5cff" },
@@ -105,10 +114,71 @@ function getTechInfo(tag) {
   return techMap[tag] || { icon: Wrench, color: "#7c5cff" };
 }
 
+function TechIconButton({ tag, categoryLabel }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const tech = getTechInfo(tag);
+  const TechIcon = tech.icon;
+  const categoryTag = categoryShortNames[categoryLabel] || "TECH";
+
+  return (
+    <div
+      className="relative flex flex-col items-center"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Floating Tooltip Popup on top */}
+      <AnimatePresence>
+        {isHovered && (
+          <motion.div
+            initial={{ opacity: 0, y: 8, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 4, scale: 0.95 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="absolute bottom-full mb-3 z-30 pointer-events-none flex flex-col items-center"
+          >
+            <div className="rounded-xl border border-white/15 bg-ink/95 px-3.5 py-2 shadow-2xl backdrop-blur-md text-center min-w-[90px]">
+              <p className="font-mono text-xs font-bold text-paper whitespace-nowrap">
+                {tag}
+              </p>
+              <p className="font-mono text-[9px] uppercase tracking-wider text-muted mt-0.5 whitespace-nowrap">
+                {categoryTag}
+              </p>
+            </div>
+            {/* Tooltip Arrow */}
+            <div className="w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-white/15 -mt-[1px]" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Icon Button Tile */}
+      <motion.button
+        whileHover={{ scale: 1.08, y: -2 }}
+        whileTap={{ scale: 0.95 }}
+        transition={{ duration: 0.2 }}
+        className="group relative flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-white/10 bg-surface-2/80 shadow-lg hover:border-violet/50 hover:bg-surface-2 hover:shadow-violet/20 cursor-pointer overflow-hidden"
+      >
+        {/* Soft background glow matching tech brand color on hover */}
+        <div
+          className="pointer-events-none absolute -inset-2 opacity-0 group-hover:opacity-30 transition-opacity duration-300 blur-xl"
+          style={{ background: tech.color }}
+        />
+
+        {/* Brand Icon */}
+        <TechIcon
+          size={24}
+          className="transition-transform duration-300 group-hover:scale-110"
+          style={{ color: tech.color }}
+        />
+      </motion.button>
+    </div>
+  );
+}
+
 export default function ToolsFamiliar() {
   return (
-    <section id="tools" className="relative border-t border-line px-6 py-16">
+    <section id="tools" className="relative border-t border-line px-6 py-20">
       <div className="mx-auto max-w-5xl">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -120,10 +190,14 @@ export default function ToolsFamiliar() {
             05 // Tech Stack
           </p>
           <h2 className="font-display text-3xl font-medium tracking-tight text-paper sm:text-4xl">
-            Tools &amp; Technologies Familiar
+            Tools of the Trade
           </h2>
+          <p className="mt-2 text-sm font-mono text-muted">
+            Hover over each icon to explore my stack — from frontend frameworks to AI &amp; backend tooling.
+          </p>
         </motion.div>
 
+        {/* Categories Bento Grid */}
         <div className="grid gap-6 md:grid-cols-2">
           {skillGroups.map((group, index) => {
             const GroupIcon = categoryIcons[group.label] || Wrench;
@@ -134,10 +208,10 @@ export default function ToolsFamiliar() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="bento-tile p-5 hover:border-violet/40 transition-all duration-300 flex flex-col justify-between"
+                className="bento-tile p-6 hover:border-violet/40 transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-line/50">
+                  <div className="flex items-center gap-2.5 mb-6 pb-3 border-b border-line/50">
                     <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet/10 text-violet border border-violet/20">
                       <GroupIcon size={18} />
                     </div>
@@ -146,39 +220,15 @@ export default function ToolsFamiliar() {
                     </h3>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {group.tags.map((tag) => {
-                      const tech = getTechInfo(tag);
-                      const TechIcon = tech.icon;
-
-                      return (
-                        <motion.div
-                          key={tag}
-                          whileHover={{ scale: 1.03, y: -1 }}
-                          transition={{ duration: 0.2 }}
-                          className="group relative flex items-center gap-2.5 rounded-xl border border-white/10 bg-surface-2/80 px-3 py-2 shadow-sm hover:border-violet/40 hover:bg-surface-2 hover:shadow-md hover:shadow-violet/10 cursor-pointer overflow-hidden"
-                        >
-                          {/* Soft background glow matching brand color on hover */}
-                          <div
-                            className="pointer-events-none absolute -inset-2 opacity-0 group-hover:opacity-25 transition-opacity duration-300 blur-lg"
-                            style={{ background: tech.color }}
-                          />
-
-                          {/* Icon Container */}
-                          <div
-                            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-ink/90 transition-transform group-hover:scale-105"
-                            style={{ color: tech.color }}
-                          >
-                            <TechIcon size={16} />
-                          </div>
-
-                          {/* Technology Name */}
-                          <span className="font-mono text-[11px] font-semibold text-paper/90 group-hover:text-white transition-colors truncate">
-                            {tag}
-                          </span>
-                        </motion.div>
-                      );
-                    })}
+                  {/* Icon Grid */}
+                  <div className="flex flex-wrap gap-3 sm:gap-4 items-center">
+                    {group.tags.map((tag) => (
+                      <TechIconButton
+                        key={tag}
+                        tag={tag}
+                        categoryLabel={group.label}
+                      />
+                    ))}
                   </div>
                 </div>
               </motion.div>
