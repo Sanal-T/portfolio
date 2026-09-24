@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   SiPython,
   SiFastapi,
-  SiGit,
   SiGithub,
   SiMysql,
   SiMongodb,
@@ -12,7 +11,6 @@ import {
   SiDocker,
   SiLinux,
   SiReact,
-  SiVite,
   SiTypescript,
   SiJavascript,
   SiTailwindcss,
@@ -24,101 +22,72 @@ import {
   SiGooglecloud,
 } from "react-icons/si";
 import {
-  Database,
-  Cpu,
-  Server,
-  Shield,
-  Terminal,
   Zap,
   Sparkles,
   Layers,
   Search,
-  ShieldCheck,
   Brain,
-  MessageSquare,
   Wrench,
   Code,
   KeyRound,
   Bot,
-  Cloud,
+  Cpu,
   Palette,
   FileCode,
   CheckCircle2,
+  ShieldCheck,
 } from "lucide-react";
-import { skillGroups } from "../data/content";
 
-const categoryIcons = {
-  "Core Engineering": Terminal,
-  "AI / GenAI & ML": Cpu,
-  "Databases & Storage": Database,
-  "Backend & Security": Shield,
-  "Backend, Cloud & Security": Shield,
-};
+const allTools = [
+  // Frontend
+  { name: "React", category: "FRONTEND", icon: SiReact, color: "#61DAFB" },
+  { name: "TypeScript", category: "FRONTEND", icon: SiTypescript, color: "#3178C6" },
+  { name: "JavaScript", category: "FRONTEND", icon: SiJavascript, color: "#F7DF1E" },
+  { name: "HTML5", category: "FRONTEND", icon: FileCode, color: "#E34F26" },
+  { name: "CSS3", category: "FRONTEND", icon: Palette, color: "#1572B6" },
+  { name: "TailwindCSS", category: "FRONTEND", icon: SiTailwindcss, color: "#06B6D4" },
 
-const categoryShortNames = {
-  "Core Engineering": "CORE ENG",
-  "AI / GenAI & ML": "AI / ML",
-  "Databases & Storage": "DATABASE",
-  "Backend & Security": "BACKEND",
-  "Backend, Cloud & Security": "BACKEND / CLOUD",
-};
+  // Backend & Core Engineering
+  { name: "Python", category: "BACKEND", icon: SiPython, color: "#3776AB" },
+  { name: "Go", category: "BACKEND", icon: SiGo, color: "#00ADD8" },
+  { name: "FastAPI", category: "BACKEND", icon: SiFastapi, color: "#009688" },
+  { name: "REST APIs", category: "BACKEND", icon: SiPostman, color: "#FF6C37" },
+  { name: "Pydantic", category: "BACKEND", icon: CheckCircle2, color: "#E92063" },
+  { name: "AsyncIO", category: "BACKEND", icon: Zap, color: "#3776AB" },
+  { name: "OOP", category: "BACKEND", icon: Code, color: "#a855f7" },
 
-const techMap = {
-  Python: { icon: SiPython, color: "#3776AB" },
-  Go: { icon: SiGo, color: "#00ADD8" },
-  FastAPI: { icon: SiFastapi, color: "#009688" },
-  JavaScript: { icon: SiJavascript, color: "#F7DF1E" },
-  TypeScript: { icon: SiTypescript, color: "#3178C6" },
-  React: { icon: SiReact, color: "#61DAFB" },
-  HTML5: { icon: FileCode, color: "#E34F26" },
-  CSS3: { icon: Palette, color: "#1572B6" },
-  SQL: { icon: SiPostgresql, color: "#4169E1" },
-  "REST APIs": { icon: SiPostman, color: "#FF6C37" },
-  "Git & GitHub": { icon: SiGithub, color: "#F05032" },
-  "Object-Oriented Programming": { icon: Code, color: "#a855f7" },
-  AsyncIO: { icon: Zap, color: "#3776AB" },
+  // AI / GenAI & ML
+  { name: "Generative AI", category: "AI / ML", icon: Sparkles, color: "#c084fc" },
+  { name: "LLMs", category: "AI / ML", icon: Brain, color: "#e879f9" },
+  { name: "SLMs", category: "AI / ML", icon: Brain, color: "#a855f7" },
+  { name: "RAG Pipelines", category: "AI / ML", icon: Layers, color: "#ec4899" },
+  { name: "LangChain", category: "AI / ML", icon: Bot, color: "#22c55e" },
+  { name: "Gemini API", category: "AI / ML", icon: Sparkles, color: "#4285F4" },
+  { name: "Ollama", category: "AI / ML", icon: Cpu, color: "#ffffff" },
+  { name: "Machine Learning", category: "AI / ML", icon: SiScikitlearn, color: "#F7931E" },
+  { name: "Deep Learning", category: "AI / ML", icon: SiPytorch, color: "#EE4C2C" },
+  { name: "FAISS", category: "AI / ML", icon: Search, color: "#0668E1" },
 
-  "Generative AI": { icon: Sparkles, color: "#c084fc" },
-  LLMs: { icon: Brain, color: "#e879f9" },
-  SLMs: { icon: Brain, color: "#a855f7" },
-  "RAG Pipelines": { icon: Layers, color: "#ec4899" },
-  LangChain: { icon: Bot, color: "#22c55e" },
-  FAISS: { icon: Search, color: "#0668E1" },
-  NLP: { icon: MessageSquare, color: "#f43f5e" },
-  "Gemini API": { icon: Sparkles, color: "#4285F4" },
-  Ollama: { icon: Cpu, color: "#ffffff" },
-  "Machine Learning": { icon: SiScikitlearn, color: "#F7931E" },
-  "Deep Learning": { icon: SiPytorch, color: "#EE4C2C" },
+  // Databases & Cloud
+  { name: "PostgreSQL", category: "DATABASE", icon: SiPostgresql, color: "#4169E1" },
+  { name: "Supabase", category: "DATABASE", icon: SiSupabase, color: "#3ECF8E" },
+  { name: "Google Cloud (GCP)", category: "CLOUD", icon: SiGooglecloud, color: "#4285F4" },
+  { name: "MySQL", category: "DATABASE", icon: SiMysql, color: "#4479A1" },
+  { name: "MongoDB", category: "DATABASE", icon: SiMongodb, color: "#47A248" },
+  { name: "Firebase", category: "DATABASE", icon: SiFirebase, color: "#FFCA28" },
 
-  PostgreSQL: { icon: SiPostgresql, color: "#4169E1" },
-  Supabase: { icon: SiSupabase, color: "#3ECF8E" },
-  "Google Cloud (GCP)": { icon: SiGooglecloud, color: "#4285F4" },
-  MySQL: { icon: SiMysql, color: "#4479A1" },
-  MongoDB: { icon: SiMongodb, color: "#47A248" },
-  "Firebase / Firestore": { icon: SiFirebase, color: "#FFCA28" },
-  "Vector Stores": { icon: Database, color: "#a855f7" },
+  // Security & DevOps Tooling
+  { name: "Docker", category: "DEVOPS", icon: SiDocker, color: "#2496ED" },
+  { name: "Linux", category: "DEVOPS", icon: SiLinux, color: "#FCC624" },
+  { name: "Git & GitHub", category: "DEVOPS", icon: SiGithub, color: "#F05032" },
+  { name: "Postman", category: "TOOLS", icon: SiPostman, color: "#FF6C37" },
+  { name: "JWT Auth", category: "SECURITY", icon: KeyRound, color: "#d8b4fe" },
+  { name: "RBAC Security", category: "SECURITY", icon: ShieldCheck, color: "#7c5cff" },
+];
 
-  Pydantic: { icon: CheckCircle2, color: "#E92063" },
-  Postman: { icon: SiPostman, color: "#FF6C37" },
-  "JWT Auth": { icon: KeyRound, color: "#d8b4fe" },
-  "Role-Based Access Control (RBAC)": { icon: ShieldCheck, color: "#7c5cff" },
-  Uvicorn: { icon: Terminal, color: "#009688" },
-  Middleware: { icon: Layers, color: "#c084fc" },
-  "Vite / React Integration": { icon: SiReact, color: "#61DAFB" },
-  Docker: { icon: SiDocker, color: "#2496ED" },
-  Linux: { icon: SiLinux, color: "#FCC624" },
-  TailwindCSS: { icon: SiTailwindcss, color: "#06B6D4" },
-};
-
-function getTechInfo(tag) {
-  return techMap[tag] || { icon: Wrench, color: "#7c5cff" };
-}
-
-function TechIconButton({ tag, categoryLabel }) {
+function TechIconButton({ tool }) {
   const [isHovered, setIsHovered] = useState(false);
-  const tech = getTechInfo(tag);
-  const TechIcon = tech.icon;
-  const categoryTag = categoryShortNames[categoryLabel] || "TECH";
+  const TechIcon = tool.icon || Wrench;
 
   return (
     <div
@@ -126,48 +95,48 @@ function TechIconButton({ tag, categoryLabel }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Floating Tooltip Popup on top */}
+      {/* Top Floating Tooltip Popup */}
       <AnimatePresence>
         {isHovered && (
           <motion.div
             initial={{ opacity: 0, y: 8, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.95 }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
+            transition={{ duration: 0.16, ease: "easeOut" }}
             className="absolute bottom-full mb-3 z-30 pointer-events-none flex flex-col items-center"
           >
-            <div className="rounded-xl border border-white/15 bg-ink/95 px-3.5 py-2 shadow-2xl backdrop-blur-md text-center min-w-[90px]">
+            <div className="rounded-xl border border-white/15 bg-ink/95 px-3.5 py-1.5 shadow-2xl backdrop-blur-md text-center min-w-[85px]">
               <p className="font-mono text-xs font-bold text-paper whitespace-nowrap">
-                {tag}
+                {tool.name}
               </p>
               <p className="font-mono text-[9px] uppercase tracking-wider text-muted mt-0.5 whitespace-nowrap">
-                {categoryTag}
+                {tool.category}
               </p>
             </div>
-            {/* Tooltip Arrow */}
+            {/* Tooltip Arrow Pointer */}
             <div className="w-0 h-0 border-x-4 border-x-transparent border-t-4 border-t-white/15 -mt-[1px]" />
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Icon Button Tile */}
+      {/* Icon Tile */}
       <motion.button
         whileHover={{ scale: 1.08, y: -2 }}
         whileTap={{ scale: 0.95 }}
-        transition={{ duration: 0.2 }}
-        className="group relative flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-white/10 bg-surface-2/80 shadow-lg hover:border-violet/50 hover:bg-surface-2 hover:shadow-violet/20 cursor-pointer overflow-hidden"
+        transition={{ duration: 0.18 }}
+        className="group relative flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl border border-white/10 bg-surface-2/80 shadow-md hover:border-violet/50 hover:bg-surface-2 hover:shadow-violet/20 cursor-pointer overflow-hidden"
       >
-        {/* Soft background glow matching tech brand color on hover */}
+        {/* Soft Hover Glow matching tech brand color */}
         <div
           className="pointer-events-none absolute -inset-2 opacity-0 group-hover:opacity-30 transition-opacity duration-300 blur-xl"
-          style={{ background: tech.color }}
+          style={{ background: tool.color }}
         />
 
-        {/* Brand Icon */}
+        {/* Tech Icon */}
         <TechIcon
           size={24}
           className="transition-transform duration-300 group-hover:scale-110"
-          style={{ color: tech.color }}
+          style={{ color: tool.color }}
         />
       </motion.button>
     </div>
@@ -184,7 +153,7 @@ export default function ToolsFamiliar() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="mb-10"
+          className="mb-8"
         >
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-violet mb-2">
             05 // Tech Stack
@@ -193,49 +162,27 @@ export default function ToolsFamiliar() {
             Tools of the Trade
           </h2>
           <p className="mt-2 text-sm font-mono text-muted">
-            Hover over each icon to explore my stack — from frontend frameworks to AI &amp; backend tooling.
+            Hover over each icon to explore my stack — from frontend frameworks to security &amp; AI tooling.
           </p>
         </motion.div>
 
-        {/* Categories Bento Grid */}
-        <div className="grid gap-6 md:grid-cols-2">
-          {skillGroups.map((group, index) => {
-            const GroupIcon = categoryIcons[group.label] || Wrench;
-            return (
-              <motion.div
-                key={group.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                className="bento-tile p-6 hover:border-violet/40 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center gap-2.5 mb-6 pb-3 border-b border-line/50">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet/10 text-violet border border-violet/20">
-                      <GroupIcon size={18} />
-                    </div>
-                    <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-paper">
-                      {group.label}
-                    </h3>
-                  </div>
-
-                  {/* Icon Grid */}
-                  <div className="flex flex-wrap gap-3 sm:gap-4 items-center">
-                    {group.tags.map((tag) => (
-                      <TechIconButton
-                        key={tag}
-                        tag={tag}
-                        categoryLabel={group.label}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+        {/* Single Continuous Bento Panel */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5 }}
+          className="bento-tile p-6 sm:p-8 hover:border-violet/40 transition-all duration-300"
+        >
+          <div className="flex flex-wrap gap-3.5 sm:gap-5 items-center justify-center sm:justify-start">
+            {allTools.map((tool) => (
+              <TechIconButton key={tool.name} tool={tool} />
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
 }
+
+
