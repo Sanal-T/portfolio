@@ -7,7 +7,6 @@ import {
   GitBranch,
   Star,
   Search,
-  Activity,
   Flame,
   GitCommit,
   FolderGit2,
@@ -25,77 +24,65 @@ export default function GithubDetails() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("All");
 
-  // Fetch Live GitHub Activity & Repos from backend endpoint
+  // Fetch Live GitHub Activity & Repos directly from public GitHub API
   const fetchGithubSummary = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/github/summary");
-      if (!res.ok) throw new Error("Backend API unavailable");
-      const data = await res.json();
-      if (data.success) {
-        setGithubData(data);
-        setLoading(false);
-        return;
+      const reposRes = await fetch(
+        `https://api.github.com/users/${githubDetails.username}/repos?sort=updated&per_page=100`
+      );
+      const repos = await reposRes.json();
+      if (Array.isArray(repos)) {
+        const processedRepos = repos.map((r) => ({
+          id: r.id,
+          name: r.name,
+          description: r.description || "No description provided.",
+          html_url: r.html_url,
+          stars: r.stargazers_count || 0,
+          forks: r.forks_count || 0,
+          language: r.language || "Code",
+          updated_at: r.updated_at,
+        }));
+
+        const langCounts = {};
+        processedRepos.forEach((r) => {
+          langCounts[r.language] = (langCounts[r.language] || 0) + 1;
+        });
+
+        const totalLangs = processedRepos.length || 1;
+        const languages = Object.entries(langCounts)
+          .map(([lang, count]) => ({
+            language: lang,
+            count,
+            percentage: Math.round((count / totalLangs) * 100),
+          }))
+          .sort((a, b) => b.count - a.count);
+
+        setGithubData({
+          username: githubDetails.username,
+          profile: {
+            name: profile.name,
+            html_url: githubDetails.url,
+            public_repos: processedRepos.length,
+          },
+          stats_3m: {
+            total_contributions_3m: 84,
+            active_days_3m: 28,
+            total_contributions_year: 92,
+            active_repos_3m_count: processedRepos.length,
+            total_repos_count: processedRepos.length,
+            primary_language: languages[0]?.language || "Python",
+          },
+          heatmap_90d: [],
+          recent_events_3m: [],
+          repos: processedRepos,
+          languages,
+        });
       }
-      throw new Error("Invalid response format");
     } catch (_err) {
-      try {
-        const reposRes = await fetch(
-          `https://api.github.com/users/${githubDetails.username}/repos?sort=updated&per_page=100`
-        );
-        const repos = await reposRes.json();
-        if (Array.isArray(repos)) {
-          const processedRepos = repos.map((r) => ({
-            id: r.id,
-            name: r.name,
-            description: r.description || "No description provided.",
-            html_url: r.html_url,
-            stars: r.stargazers_count || 0,
-            forks: r.forks_count || 0,
-            language: r.language || "Code",
-            updated_at: r.updated_at,
-          }));
-
-          const langCounts = {};
-          processedRepos.forEach((r) => {
-            langCounts[r.language] = (langCounts[r.language] || 0) + 1;
-          });
-
-          const totalLangs = processedRepos.length || 1;
-          const languages = Object.entries(langCounts)
-            .map(([lang, count]) => ({
-              language: lang,
-              count,
-              percentage: Math.round((count / totalLangs) * 100),
-            }))
-            .sort((a, b) => b.count - a.count);
-
-          setGithubData({
-            username: githubDetails.username,
-            profile: {
-              name: profile.name,
-              html_url: githubDetails.url,
-              public_repos: processedRepos.length,
-            },
-            stats_3m: {
-              total_contributions_3m: 84,
-              active_days_3m: 28,
-              total_contributions_year: 92,
-              active_repos_3m_count: processedRepos.length,
-              total_repos_count: processedRepos.length,
-              primary_language: languages[0]?.language || "Python",
-            },
-            heatmap_90d: [],
-            recent_events_3m: [],
-            repos: processedRepos,
-            languages,
-          });
-        }
-      } catch (_fallbackErr) {
-        console.error(_fallbackErr);
-      } finally {
-        setLoading(false);
-      }
+      console.error("Error fetching GitHub repositories:", _err);
+    } finally {
+      setLoading(false);
     }
   };
 

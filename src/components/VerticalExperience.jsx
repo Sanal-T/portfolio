@@ -7,15 +7,12 @@ import {
   Building2,
   Sparkles,
   CheckCircle2,
-  ArrowRight,
   Code2,
   MapPin,
   TrendingUp,
-  Layers,
   ChevronRight,
   Target,
 } from "lucide-react";
-import { experience } from "../data/content";
 
 // Enhanced rich metadata for experience milestones
 const experienceData = [
