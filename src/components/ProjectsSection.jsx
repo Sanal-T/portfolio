@@ -4,14 +4,10 @@ import {
   ArrowUpRight,
   FolderGit2,
   Sparkles,
-  Cpu,
   Bot,
   ShieldCheck,
   Search,
   Code2,
-  Layers,
-  Star,
-  GitBranch,
 } from "lucide-react";
 import StarBorder from "./StarBorder";
 import { projects } from "../data/content";
