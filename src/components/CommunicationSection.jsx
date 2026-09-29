@@ -62,7 +62,7 @@ export default function CommunicationSection() {
         } else {
           throw new Error(data?.message || "Web3Forms submission failed");
         }
-      } catch (_err) {
+      } catch {
         setStatus("error");
         setStatusMsg("Submission failed. Opening your email app to reach " + profile.email + " directly...");
         window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(
@@ -72,31 +72,12 @@ export default function CommunicationSection() {
       }
     }
 
-    // 2. Fallback to local Python backend if available
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json().catch(() => null);
-
-      if (res.ok && data?.success) {
-        setStatus("success");
-        setStatusMsg(data.message || "Message sent successfully! I'll get back to you soon.");
-        setFormData({ name: "", email: "", message: "" });
-        return;
-      }
-      throw new Error(data?.message || "Backend submission failed");
-    } catch (_err) {
-      // 3. Graceful mailto fallback so no message is ever dropped
-      window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(
-        "Portfolio Inquiry from " + formData.name
-      )}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.name + " (" + formData.email + ")")}`;
-      setStatus("success");
-      setStatusMsg("Opening your email client to send your message to " + profile.email);
-    }
+    // 2. Direct fallback to user email client if Web3Forms key is not configured or offline
+    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(
+      "Portfolio Inquiry from " + formData.name
+    )}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.name + " (" + formData.email + ")")}`;
+    setStatus("success");
+    setStatusMsg("Opening your email client to send your message to " + profile.email);
   };
 
   return (

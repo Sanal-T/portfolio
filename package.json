@@ -4,12 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev:frontend": "vite",
-    "dev:backend": "python -m uvicorn main:app --reload --port 8000 --app-dir backend",
-    "dev": "concurrently -n \"frontend,backend\" -c \"cyan.bold,magenta.bold\" \"npm run dev:frontend\" \"npm run dev:backend\"",
-    "start": "npm run dev",
+    "dev": "vite",
+    "start": "vite",
     "build": "vite build",
-    "lint": "oxlint",
+    "lint": "oxlint src",
     "preview": "vite preview"
   },
   "dependencies": {
