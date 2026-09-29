@@ -191,7 +191,7 @@ export const experience = [
   {
     role: "AI/ML Engineer (Intern)",
     org: "Mintsglobal.ae",
-    period: "Current",
+    period: "2026",
     type: "Work Experience",
     description:
       "Building and shipping ML-driven features, LLM workflows, and high-performance backend services as part of the core product engineering team.",
@@ -200,7 +200,7 @@ export const experience = [
   {
     role: "B.Tech, Computer Science (AI Specialization)",
     org: "Adi Shankara Institute of Engineering and Technology",
-    period: "Education",
+    period: "2022 — 2026",
     type: "Degree",
     description:
       "Specialized in Artificial Intelligence, Machine Learning algorithms, Data Structures, and Software Engineering principles.",
