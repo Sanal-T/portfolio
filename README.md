@@ -1,63 +1,59 @@
 # Sanal T. — Portfolio
 
-A premium, dark, editorial AI-engineering portfolio.
+A high-performance, dark luxury editorial portfolio for an AI/ML Engineer & Software Developer.
 
-## Architecture
+## Tech Stack
 
-Deliberately simple hybrid setup:
+- **Frontend**: React 19, Vite 8, Tailwind CSS v4, Framer Motion, Lucide Icons, Three.js (WebGL Silk fluid background)
+- **Styling**: Bento-Grid architecture, glassmorphism, glowing borders, custom tokens (`Space Grotesk`, `Inter`, `JetBrains Mono`)
+- **Contact Service (Zero-Backend)**: Web3Forms direct client submission (no server required) + graceful mailto fallback
+- **Optional Backend**: FastAPI (Python 3.10+ async IO, Uvicorn, Pydantic)
 
-- **Frontend** — single `index.html` (HTML/CSS/vanilla JS). No framework.
-- **Backend** — FastAPI, used only for what genuinely needs a server: currently
-  just the contact form's email delivery.
+---
 
-```text
-sanal-portfolio/
-├── index.html              # entire frontend
-├── backend/
-│   ├── main.py              # app entrypoint, serves index.html + API
-│   ├── config.py            # env-based settings
-│   ├── routes/
-│   │   └── contact.py        # POST /api/contact
-│   └── services/
-│       └── email_service.py  # SMTP delivery logic
-├── requirements.txt
-├── .env.example
-└── .env                     # not committed
-```
+## Running Locally
 
-## Running locally
-
+### Option A: Frontend Only (No Python Needed!)
 ```bash
-python -m venv .venv
-source .venv/bin/activate       # Windows: .venv\Scripts\activate
+npm run dev:frontend
+```
+Your portfolio will launch on `http://localhost:5173`. Everything works out-of-the-box (including GitHub stats directly via client-side GitHub REST API).
+
+### Option B: Fullstack (Frontend + Optional FastAPI Backend)
+```bash
+# 1. Install frontend packages
+npm install
+
+# 2. (Optional) Install Python requirements
 pip install -r requirements.txt
 
-cp .env.example .env            # then fill in real SMTP + recipient values
-cd backend
-uvicorn main:app --reload --port 8000
+# 3. Run both concurrently
+npm run dev
 ```
 
-Visit `http://localhost:8000` — it serves `index.html` directly and exposes
-`POST /api/contact` for the contact form.
+---
 
-## Known placeholders
+## Contact Form Setup (Zero Backend)
 
-- SMTP credentials in `.env` — still empty, needed for the contact form to
-  actually send email (see below)
-- Contribution graph on the "Always Building" section — illustrative
-  placeholder pattern, not real GitHub activity, until GitHub API
-  integration is added
+We use **Web3Forms** so you never have to host or maintain a 24/7 Python backend just to receive emails.
 
-Email, LinkedIn, and GitHub links in `index.html` are filled in with real
-values.
+1. Go to [https://web3forms.com](https://web3forms.com)
+2. Enter your email (`sanalt2024@gmail.com`) and click **"Create Access Key"** (takes 10 seconds, 100% free)
+3. Open [.env](.env) and paste your key:
+   ```env
+   VITE_WEB3FORMS_ACCESS_KEY=your_access_key_here
+   ```
+4. Restart your frontend (`npm run dev:frontend`). Any submissions from the contact form will land directly in your Gmail inbox!
 
-## Contact form flow
+> **Fallback:** If no key is configured or the backend is offline, the form automatically offers a 1-click fallback to launch the user's default email client (`mailto:`) with pre-filled subject and message body.
 
-```text
-index.html (form) → fetch('/api/contact') → FastAPI route
-  → services/email_service.py → SMTP → your inbox
+---
+
+## Building for Production / Free Deployment
+
+You can deploy this site for free on **Vercel**, **Netlify**, or **GitHub Pages**:
+
+```bash
+npm run build
 ```
-
-Validation happens both client-side (required fields) and server-side
-(Pydantic model + sanitization) — the backend never trusts the frontend
-alone.
+The output static bundle will be generated in `dist/`.

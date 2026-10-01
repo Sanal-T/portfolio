@@ -31,6 +31,48 @@ export default function CommunicationSection() {
     setStatus("submitting");
     setStatusMsg("");
 
+    const web3Key = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+    // 1. Direct Web3Forms submission (Zero Python backend required)
+    if (web3Key && web3Key !== "YOUR_WEB3FORMS_ACCESS_KEY") {
+      try {
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            access_key: web3Key,
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            subject: `Portfolio Inquiry from ${formData.name}`,
+            from_name: "Portfolio Contact Form",
+          }),
+        });
+
+        const data = await res.json().catch(() => null);
+
+        if (res.ok && data?.success) {
+          setStatus("success");
+          setStatusMsg("Message sent successfully! I'll get back to you soon.");
+          setFormData({ name: "", email: "", message: "" });
+          return;
+        } else {
+          throw new Error(data?.message || "Web3Forms submission failed");
+        }
+      } catch (_err) {
+        setStatus("error");
+        setStatusMsg("Submission failed. Opening your email app to reach " + profile.email + " directly...");
+        window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(
+          "Portfolio Inquiry from " + formData.name
+        )}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.name + " (" + formData.email + ")")}`;
+        return;
+      }
+    }
+
+    // 2. Fallback to local Python backend if available
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
@@ -44,17 +86,16 @@ export default function CommunicationSection() {
         setStatus("success");
         setStatusMsg(data.message || "Message sent successfully! I'll get back to you soon.");
         setFormData({ name: "", email: "", message: "" });
-      } else {
-        setStatus("error");
-        setStatusMsg(
-          data?.message ||
-            (Array.isArray(data?.detail) ? data.detail[0]?.msg : null) ||
-            "Failed to send message. Please try again or email directly."
-        );
+        return;
       }
+      throw new Error(data?.message || "Backend submission failed");
     } catch (_err) {
-      setStatus("error");
-      setStatusMsg("Unable to connect to backend server. You can email me directly at " + profile.email);
+      // 3. Graceful mailto fallback so no message is ever dropped
+      window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(
+        "Portfolio Inquiry from " + formData.name
+      )}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.name + " (" + formData.email + ")")}`;
+      setStatus("success");
+      setStatusMsg("Opening your email client to send your message to " + profile.email);
     }
   };
 
