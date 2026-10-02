@@ -24,7 +24,7 @@ export default function CommunicationSection() {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) {
       setStatus("error");
-      setStatusMsg("Please fill out all required fields.");
+      setStatusMsg("Please fill out all fields before sending.");
       return;
     }
 
@@ -33,8 +33,8 @@ export default function CommunicationSection() {
 
     const web3Key = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 
-    // 1. Direct Web3Forms submission (Zero Python backend required)
-    if (web3Key && web3Key !== "YOUR_WEB3FORMS_ACCESS_KEY") {
+    // 1. Web3Forms submission if an access key is configured
+    if (web3Key && web3Key.trim() !== "" && web3Key !== "YOUR_WEB3FORMS_ACCESS_KEY") {
       try {
         const res = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
@@ -47,7 +47,7 @@ export default function CommunicationSection() {
             name: formData.name,
             email: formData.email,
             message: formData.message,
-            subject: `Portfolio Inquiry from ${formData.name}`,
+            subject: `Portfolio Collaboration from ${formData.name}`,
             from_name: "Portfolio Contact Form",
           }),
         });
@@ -56,28 +56,64 @@ export default function CommunicationSection() {
 
         if (res.ok && data?.success) {
           setStatus("success");
-          setStatusMsg("Message sent successfully! I'll get back to you soon.");
+          setStatusMsg("Handshake established! Your message is in my queue — I'll reach back to your inbox shortly.");
           setFormData({ name: "", email: "", message: "" });
+          setTimeout(() => {
+            setStatus("idle");
+            setStatusMsg("");
+          }, 8000);
           return;
-        } else {
-          throw new Error(data?.message || "Web3Forms submission failed");
         }
       } catch {
-        setStatus("error");
-        setStatusMsg("Submission failed. Opening your email app to reach " + profile.email + " directly...");
-        window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(
-          "Portfolio Inquiry from " + formData.name
-        )}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.name + " (" + formData.email + ")")}`;
-        return;
+        // Continue to FormSubmit fallback
       }
     }
 
-    // 2. Direct fallback to user email client if Web3Forms key is not configured or offline
-    window.location.href = `mailto:${profile.email}?subject=${encodeURIComponent(
-      "Portfolio Inquiry from " + formData.name
+    // 2. Direct zero-key FormSubmit AJAX submission straight to your inbox
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${profile.email}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `Portfolio Collaboration from ${formData.name}`,
+        }),
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (res.ok || data?.success === "true" || data?.success === true) {
+        setStatus("success");
+        setStatusMsg("Handshake established! Your message is in my queue — I'll reach back to your inbox shortly.");
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => {
+          setStatus("idle");
+          setStatusMsg("");
+        }, 8000);
+        return;
+      }
+    } catch {
+      // Continue to mail client fallback
+    }
+
+    // 3. Direct mailto dispatch fallback
+    const mailtoUrl = `mailto:${profile.email}?subject=${encodeURIComponent(
+      "Portfolio Collaboration from " + formData.name
     )}&body=${encodeURIComponent(formData.message + "\n\nFrom: " + formData.name + " (" + formData.email + ")")}`;
+
+    window.location.href = mailtoUrl;
     setStatus("success");
-    setStatusMsg("Opening your email client to send your message to " + profile.email);
+    setStatusMsg("Handshake established! Your message has been prepared for dispatch — looking forward to connecting.");
+    setFormData({ name: "", email: "", message: "" });
+    setTimeout(() => {
+      setStatus("idle");
+      setStatusMsg("");
+    }, 8000);
   };
 
   return (
