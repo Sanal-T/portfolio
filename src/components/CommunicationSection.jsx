@@ -118,7 +118,7 @@ export default function CommunicationSection() {
 
   return (
     <section id="contact" className="relative px-6 py-3 sm:py-4">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

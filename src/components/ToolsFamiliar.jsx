@@ -148,7 +148,7 @@ function TechIconButton({ tool }) {
 export default function ToolsFamiliar() {
   return (
     <section id="tools" className="relative px-6 py-3 sm:py-4">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl">
         {/* Single Continuous Bento Panel */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

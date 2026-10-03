@@ -189,7 +189,7 @@ export default function DescriptionCapabilities() {
       <div className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 h-96 w-96 rounded-full bg-violet/10 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-40 right-10 h-80 w-80 rounded-full bg-cyan/10 blur-[120px]" />
 
-      <div className="mx-auto max-w-5xl relative z-10">
+      <div className="mx-auto max-w-6xl relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}

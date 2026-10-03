@@ -283,7 +283,7 @@ export default function GithubDetails() {
 
   return (
     <section id="github" className="relative px-6 py-3 sm:py-4">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-6xl">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
